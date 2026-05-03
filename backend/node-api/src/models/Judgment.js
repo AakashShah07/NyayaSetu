@@ -20,6 +20,8 @@ const judgmentSchema = new mongoose.Schema(
       default: 'pending',
     },
     extractedAt: { type: Date },
+    extractionError: { type: String },
+    needsAdminReview: { type: Boolean, default: false },
     uploadedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   },
   { timestamps: true }

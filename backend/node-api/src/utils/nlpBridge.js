@@ -40,4 +40,13 @@ const extractDirectives = async (filePath, judgmentDate) => {
   return data;
 };
 
-module.exports = { checkHealth, extractText, extractEntities, extractDirectives };
+const extractDirectivesFromText = async (text, judgmentDate) => {
+  const body = { text };
+  if (judgmentDate) body.judgment_date = judgmentDate;
+  const { data } = await nlpClient.post('/extract/directives-from-text', body, {
+    timeout: 180000,
+  });
+  return data;
+};
+
+module.exports = { checkHealth, extractText, extractEntities, extractDirectives, extractDirectivesFromText };

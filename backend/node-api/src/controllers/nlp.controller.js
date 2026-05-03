@@ -2,6 +2,8 @@ const Judgment = require('../models/Judgment');
 const Directive = require('../models/Directive');
 const Task = require('../models/Task');
 const nlpBridge = require('../utils/nlpBridge');
+const { runExtraction } = require('../services/extraction.service');
+const extractionQueue = require('../services/extractionQueue');
 const { success, error } = require('../utils/apiResponse');
 
 const health = async (req, res, next) => {
@@ -44,49 +46,37 @@ const extract = async (req, res, next) => {
 
 const extractDirectives = async (req, res, next) => {
   try {
+    const result = await runExtraction(req.params.judgmentId);
+    return success(res, result, 'Directive extraction completed');
+  } catch (err) {
+    if (err.code === 'NOT_FOUND') return error(res, 'Judgment not found', 404);
+    if (err.code === 'NO_FILE') return error(res, 'No PDF file attached', 400);
+    return error(res, `Directive extraction failed: ${err.message}`, 500);
+  }
+};
+
+const extractDirectivesFromText = async (req, res, next) => {
+  try {
     const judgment = await Judgment.findById(req.params.judgmentId);
     if (!judgment) return error(res, 'Judgment not found', 404);
-    if (!judgment.fileUrl) return error(res, 'No PDF file attached to this judgment', 400);
+
+    const { text } = req.body;
+    if (!text) return error(res, 'Text is required', 400);
 
     judgment.extractionStatus = 'processing';
     await judgment.save();
 
     try {
-      // Call Python NLP pipeline
       const judgmentDateStr = judgment.judgmentDate
         ? judgment.judgmentDate.toISOString().split('T')[0]
         : null;
-      const result = await nlpBridge.extractDirectives(judgment.fileUrl, judgmentDateStr);
+      const result = await nlpBridge.extractDirectivesFromText(text, judgmentDateStr);
 
-      // Store extracted text
-      judgment.extractedText = result.full_text;
+      judgment.extractedText = text;
       judgment.extractedAt = new Date();
-
-      // Update judgment metadata from NER (only if not already set)
-      const meta = result.metadata || {};
-      if (!judgment.courtName && meta.court_name?.value) {
-        judgment.courtName = meta.court_name.value;
-      }
-      if (!judgment.judgmentDate && meta.judgment_date?.value) {
-        judgment.judgmentDate = new Date(meta.judgment_date.value);
-      }
-      if (!judgment.filingDate && meta.filing_date?.value) {
-        judgment.filingDate = new Date(meta.filing_date.value);
-      }
-      if ((!judgment.judges || judgment.judges.length === 0) && meta.judges?.length) {
-        judgment.judges = meta.judges.map((j) => j.value);
-      }
-      if (!judgment.parties?.petitioner && meta.parties?.petitioner?.value) {
-        judgment.parties = {
-          petitioner: meta.parties.petitioner.value,
-          respondent: meta.parties.respondent?.value || '',
-        };
-      }
-
       judgment.extractionStatus = 'completed';
-      await judgment.save();
+      judgment.extractionError = null;
 
-      // Create Directive records
       const directives = result.directives || [];
       const createdDirectives = [];
       const createdTasks = [];
@@ -108,9 +98,9 @@ const extractDirectives = async (req, res, next) => {
         });
         createdDirectives.push(directive);
 
-        // Auto-create Task for directives with deadlines
         if (d.deadline) {
           const dueDate = new Date(d.deadline);
+          const { computePriority } = require('../services/extraction.service');
           const task = await Task.create({
             directive: directive._id,
             judgment: judgment._id,
@@ -118,40 +108,75 @@ const extractDirectives = async (req, res, next) => {
             description: d.directive_text,
             department: d.responsible_department || 'General',
             dueDate,
-            priority: _computePriority(dueDate),
+            priority: computePriority(dueDate),
             status: 'not_started',
           });
           createdTasks.push(task);
         }
       }
 
+      await judgment.save();
+
       return success(res, {
         judgmentId: judgment._id,
-        metadata: result.metadata,
-        extractionInfo: result.extraction_info,
         directivesFound: createdDirectives.length,
         tasksCreated: createdTasks.length,
-        needsReview: createdDirectives.filter((d) => d.reviewStatus === 'needs_review').length,
         directives: createdDirectives,
         tasks: createdTasks,
-      }, 'Directive extraction completed');
+      }, 'Extraction from text completed');
     } catch (extractionError) {
       judgment.extractionStatus = 'failed';
+      judgment.extractionError = 'EXTRACTION_ERROR';
       await judgment.save();
-      return error(res, `Directive extraction failed: ${extractionError.message}`, 500);
+      return error(res, `Extraction failed: ${extractionError.message}`, 500);
     }
   } catch (err) {
     next(err);
   }
 };
 
-function _computePriority(dueDate) {
-  const now = new Date();
-  const daysUntilDue = Math.ceil((dueDate - now) / (1000 * 60 * 60 * 24));
-  if (daysUntilDue < 7) return 'critical';
-  if (daysUntilDue < 30) return 'high';
-  if (daysUntilDue < 90) return 'medium';
-  return 'low';
-}
+const queueStatus = async (req, res, next) => {
+  try {
+    const status = extractionQueue.getStatus();
+    const jobs = extractionQueue.getJobs(20);
+    return success(res, { ...status, jobs }, 'Queue status retrieved');
+  } catch (err) {
+    next(err);
+  }
+};
 
-module.exports = { health, extract, extractDirectives };
+const systemStats = async (req, res, next) => {
+  try {
+    const [judgmentCount, directiveCount, taskCount, pendingExtractions, failedExtractions, needsReviewCount] =
+      await Promise.all([
+        Judgment.countDocuments(),
+        Directive.countDocuments(),
+        Task.countDocuments(),
+        Judgment.countDocuments({ extractionStatus: 'pending' }),
+        Judgment.countDocuments({ extractionStatus: 'failed' }),
+        Judgment.countDocuments({ needsAdminReview: true }),
+      ]);
+
+    let nlpHealthy = false;
+    try {
+      await nlpBridge.checkHealth();
+      nlpHealthy = true;
+    } catch { /* ignore */ }
+
+    const queue = extractionQueue.getStatus();
+
+    return success(res, {
+      counts: { judgments: judgmentCount, directives: directiveCount, tasks: taskCount },
+      extraction: { pending: pendingExtractions, failed: failedExtractions, needsReview: needsReviewCount },
+      nlpService: { healthy: nlpHealthy },
+      queue,
+    }, 'System stats retrieved');
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = {
+  health, extract, extractDirectives, extractDirectivesFromText,
+  queueStatus, systemStats,
+};
