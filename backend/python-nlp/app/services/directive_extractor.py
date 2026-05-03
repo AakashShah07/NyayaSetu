@@ -96,22 +96,61 @@ def extract_directives(
     return directives
 
 
+NUMBERED_ITEM_PATTERN = re.compile(
+    r'(?:^|\n)\s*(\d+)\s*[.)]\s*',
+    re.MULTILINE,
+)
+
+
+def _split_numbered_items(text: str) -> list[str]:
+    """Split text on numbered list items (1., 2., 3. etc.) that courts use."""
+    parts = NUMBERED_ITEM_PATTERN.split(text)
+    # parts = [preamble, "1", item1_text, "2", item2_text, ...]
+    items = []
+    i = 0
+    while i < len(parts):
+        if i + 1 < len(parts) and parts[i].strip().isdigit():
+            # This is a number, next part is the item text
+            item_text = parts[i + 1].strip() if i + 1 < len(parts) else ""
+            if item_text:
+                items.append(item_text)
+            i += 2
+        else:
+            # Preamble or non-numbered text
+            if parts[i].strip():
+                items.append(parts[i].strip())
+            i += 1
+    return items
+
+
 def _identify_candidates(text: str) -> list[dict]:
     """Pass 1: Segment text into sentences, score each for 'directive-ness',
-    and group consecutive directive sentences into blocks."""
-    if not nlp:
-        # Fallback: split on periods/semicolons
-        sentences = [s.strip() for s in re.split(r'[.;]\s+', text) if s.strip()]
-        sent_data = [{"text": s, "start": 0, "end": len(s)} for s in sentences]
-    else:
+    and group consecutive directive sentences into blocks.
+    First splits on numbered items (1., 2., 3.) to handle court order format."""
+
+    # Pre-split on numbered list items — courts typically number their directives
+    numbered_items = _split_numbered_items(text)
+    has_numbered = len(numbered_items) > 1
+
+    if has_numbered:
+        # Each numbered item is treated as a separate candidate
+        sent_data = []
+        pos = 0
+        for item in numbered_items:
+            sent_data.append({"text": item, "start": pos, "end": pos + len(item)})
+            pos += len(item) + 1
+    elif nlp:
         doc = nlp(text[:100000])
         sent_data = [
             {"text": sent.text.strip(), "start": sent.start_char, "end": sent.end_char}
             for sent in doc.sents
             if sent.text.strip()
         ]
+    else:
+        sentences = [s.strip() for s in re.split(r'[.;]\s+', text) if s.strip()]
+        sent_data = [{"text": s, "start": 0, "end": len(s)} for s in sentences]
 
-    # Score each sentence
+    # Score each sentence/item
     scored = []
     for sent in sent_data:
         score = 0
@@ -123,7 +162,14 @@ def _identify_candidates(text: str) -> list[dict]:
             score += 1
         scored.append({**sent, "score": score})
 
-    # Group consecutive high-scoring sentences into directive blocks
+    # If we already split on numbered items, return each high-scoring item as its own candidate
+    if has_numbered:
+        candidates = [s for s in scored if s["score"] >= 1]
+        if not candidates:
+            candidates = [s for s in scored if s["score"] >= 0 and len(s["text"]) > 30]
+        return candidates
+
+    # Otherwise, group consecutive high-scoring sentences into directive blocks
     candidates = []
     current_block = None
 
