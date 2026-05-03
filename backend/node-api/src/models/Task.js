@@ -28,6 +28,8 @@ const taskSchema = new mongoose.Schema(
       },
     ],
     notes: { type: String },
+    escalationLevel: { type: Number, default: 0 },
+    lastAlertAt: { type: Date },
   },
   { timestamps: true }
 );
