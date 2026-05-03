@@ -8,3 +8,12 @@ export const extractText = (judgmentId) =>
 
 export const extractDirectives = (judgmentId) =>
   client.post(`/api/nlp/extract-directives/${judgmentId}`, null, { timeout: 180000 }).then((r) => r.data);
+
+export const extractDirectivesFromText = (judgmentId, text) =>
+  client.post(`/api/nlp/extract-directives-from-text/${judgmentId}`, { text }, { timeout: 180000 }).then((r) => r.data);
+
+export const getQueueStatus = () =>
+  client.get('/api/nlp/queue/status').then((r) => r.data);
+
+export const getSystemStats = () =>
+  client.get('/api/nlp/system-stats').then((r) => r.data);

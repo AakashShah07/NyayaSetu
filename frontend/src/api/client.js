@@ -1,4 +1,5 @@
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const client = axios.create({
   baseURL: '',
@@ -67,6 +68,15 @@ client.interceptors.response.use(
         return Promise.reject(refreshError);
       } finally {
         isRefreshing = false;
+      }
+    }
+
+    // Network errors (no response)
+    if (!error.response) {
+      if (error.code === 'ECONNABORTED') {
+        toast.error('Request timed out. Please try again.');
+      } else {
+        toast.error('Network error. Please check your connection.');
       }
     }
 

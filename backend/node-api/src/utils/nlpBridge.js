@@ -8,19 +8,36 @@ const nlpClient = axios.create({
   timeout: 60000,
 });
 
+async function withRetry(fn, retries = 1) {
+  try {
+    return await fn();
+  } catch (err) {
+    const isRetryable =
+      err.code === 'ECONNABORTED' ||
+      err.code === 'ECONNREFUSED' ||
+      (err.response && err.response.status >= 500);
+    if (retries > 0 && isRetryable) {
+      return fn();
+    }
+    throw err;
+  }
+}
+
 const checkHealth = async () => {
   const { data } = await nlpClient.get('/health');
   return data;
 };
 
 const extractText = async (filePath) => {
-  const form = new FormData();
-  form.append('file', fs.createReadStream(filePath));
-  const { data } = await nlpClient.post('/extract/text', form, {
-    headers: form.getHeaders(),
-    timeout: 120000,
+  return withRetry(async () => {
+    const form = new FormData();
+    form.append('file', fs.createReadStream(filePath));
+    const { data } = await nlpClient.post('/extract/text', form, {
+      headers: form.getHeaders(),
+      timeout: 120000,
+    });
+    return data;
   });
-  return data;
 };
 
 const extractEntities = async (text) => {
@@ -29,15 +46,17 @@ const extractEntities = async (text) => {
 };
 
 const extractDirectives = async (filePath, judgmentDate) => {
-  const form = new FormData();
-  form.append('file', fs.createReadStream(filePath));
-  const params = judgmentDate ? { judgment_date: judgmentDate } : {};
-  const { data } = await nlpClient.post('/extract/directives', form, {
-    headers: form.getHeaders(),
-    params,
-    timeout: 180000,
+  return withRetry(async () => {
+    const form = new FormData();
+    form.append('file', fs.createReadStream(filePath));
+    const params = judgmentDate ? { judgment_date: judgmentDate } : {};
+    const { data } = await nlpClient.post('/extract/directives', form, {
+      headers: form.getHeaders(),
+      params,
+      timeout: 180000,
+    });
+    return data;
   });
-  return data;
 };
 
 const extractDirectivesFromText = async (text, judgmentDate) => {

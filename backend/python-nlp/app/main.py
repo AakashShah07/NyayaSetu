@@ -1,4 +1,4 @@
-from fastapi import FastAPI, UploadFile, File, Query
+from fastapi import FastAPI, UploadFile, File, Query, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Optional
@@ -36,7 +36,10 @@ async def startup():
 @app.post("/extract/text")
 async def extract_text(file: UploadFile = File(...)):
     contents = await file.read()
-    result = extract_text_from_pdf(contents)
+    try:
+        result = extract_text_from_pdf(contents)
+    except Exception as e:
+        raise HTTPException(status_code=422, detail=f"corrupt_pdf: {str(e)}")
     return result
 
 
@@ -59,7 +62,10 @@ async def extract_directives_endpoint(
     contents = await file.read()
 
     # Step 1: Extract text page-by-page
-    text_result = extract_text_from_pdf(contents)
+    try:
+        text_result = extract_text_from_pdf(contents)
+    except Exception as e:
+        raise HTTPException(status_code=422, detail=f"corrupt_pdf: {str(e)}")
     full_text = text_result["text"]
     pages_data = text_result.get("pages_data", [])
 
