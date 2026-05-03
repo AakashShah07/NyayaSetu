@@ -36,7 +36,7 @@ export default function TaskStatusUpdateForm({ task, onUpdated }) {
         options={TASK_STATUSES.map((s) => ({ value: s, label: s.replace(/_/g, ' ') }))}
       />
       <div>
-        <label htmlFor="notes" className="mb-1 block text-sm font-medium text-slate-700">
+        <label htmlFor="notes" className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">
           Notes
         </label>
         <textarea
@@ -44,7 +44,7 @@ export default function TaskStatusUpdateForm({ task, onUpdated }) {
           rows={3}
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
-          className="block w-full rounded-md border-slate-300 shadow-sm focus:border-navy focus:ring-navy sm:text-sm"
+          className="block w-full rounded-md border-slate-300 shadow-sm focus:border-navy focus:ring-navy sm:text-sm dark:bg-slate-700 dark:border-slate-600 dark:text-slate-200"
           placeholder="Add a note about this update..."
         />
       </div>

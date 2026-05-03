@@ -66,9 +66,9 @@ export default function NotificationPanel({ onClose, onCountChange }) {
   };
 
   return (
-    <div className="absolute right-0 top-12 z-50 w-96 rounded-lg border border-slate-200 bg-white shadow-xl">
-      <div className="flex items-center justify-between border-b border-slate-200 px-4 py-3">
-        <h3 className="text-sm font-semibold text-slate-800">Notifications</h3>
+    <div className="absolute right-0 top-12 z-50 w-96 rounded-lg border border-slate-200 bg-white shadow-xl dark:border-slate-700 dark:bg-slate-800">
+      <div className="flex items-center justify-between border-b border-slate-200 px-4 py-3 dark:border-slate-700">
+        <h3 className="text-sm font-semibold text-slate-800 dark:text-slate-100">Notifications</h3>
         <div className="flex gap-2">
           <button
             onClick={handleMarkAllRead}

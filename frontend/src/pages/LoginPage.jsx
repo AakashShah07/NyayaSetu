@@ -28,21 +28,21 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-100 px-4">
+    <div className="flex min-h-screen items-center justify-center bg-slate-100 px-4 dark:bg-bg-dark">
       <div className="w-full max-w-md">
         <div className="mb-8 text-center">
           <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-navy text-white">
             <Scale size={32} />
           </div>
-          <h1 className="text-2xl font-bold text-navy">NyayaSetu</h1>
-          <p className="mt-1 text-sm text-slate-500">Court Order Compliance Tracker</p>
+          <h1 className="text-2xl font-bold text-navy dark:text-blue-400">NyayaSetu</h1>
+          <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">Court Order Compliance Tracker</p>
         </div>
 
         <form
           onSubmit={handleSubmit}
-          className="rounded-lg bg-white p-8 shadow-md"
+          className="rounded-lg bg-white p-8 shadow-md dark:bg-slate-800"
         >
-          <h2 className="mb-6 text-lg font-semibold text-slate-800">Sign In</h2>
+          <h2 className="mb-6 text-lg font-semibold text-slate-800 dark:text-slate-100">Sign In</h2>
 
           {error && (
             <div className="mb-4 rounded border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
@@ -51,7 +51,7 @@ export default function LoginPage() {
           )}
 
           <div className="mb-4">
-            <label htmlFor="email" className="mb-1 block text-sm font-medium text-slate-700">
+            <label htmlFor="email" className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">
               Email
             </label>
             <input
@@ -60,13 +60,13 @@ export default function LoginPage() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="block w-full rounded-md border-slate-300 shadow-sm focus:border-navy focus:ring-navy sm:text-sm"
+              className="block w-full rounded-md border-slate-300 shadow-sm focus:border-navy focus:ring-navy sm:text-sm dark:bg-slate-700 dark:border-slate-600 dark:text-slate-200"
               placeholder="you@department.gov.in"
             />
           </div>
 
           <div className="mb-6">
-            <label htmlFor="password" className="mb-1 block text-sm font-medium text-slate-700">
+            <label htmlFor="password" className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">
               Password
             </label>
             <input
@@ -75,7 +75,7 @@ export default function LoginPage() {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="block w-full rounded-md border-slate-300 shadow-sm focus:border-navy focus:ring-navy sm:text-sm"
+              className="block w-full rounded-md border-slate-300 shadow-sm focus:border-navy focus:ring-navy sm:text-sm dark:bg-slate-700 dark:border-slate-600 dark:text-slate-200"
             />
           </div>
 
