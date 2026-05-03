@@ -1,5 +1,6 @@
 import { useAuth } from '../../context/AuthContext';
 import { useSidebar } from '../../context/SidebarContext';
+import NotificationBell from '../notifications/NotificationBell';
 import { Menu } from 'lucide-react';
 
 export default function Topbar({ title }) {
@@ -18,8 +19,11 @@ export default function Topbar({ title }) {
         </button>
         <h1 className="text-xl font-semibold text-slate-800">{title}</h1>
       </div>
-      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-navy text-xs font-bold text-white">
-        {initials}
+      <div className="flex items-center gap-3">
+        <NotificationBell />
+        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-navy text-xs font-bold text-white">
+          {initials}
+        </div>
       </div>
     </header>
   );

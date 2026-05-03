@@ -12,6 +12,7 @@ import TaskDetailPage from './pages/TaskDetailPage';
 import DirectivesListPage from './pages/DirectivesListPage';
 import UserManagementPage from './pages/UserManagementPage';
 import SystemHealthPage from './pages/SystemHealthPage';
+import NotificationsPage from './pages/NotificationsPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 export default function App() {
@@ -28,6 +29,7 @@ export default function App() {
           <Route path="/tasks" element={<TasksListPage />} />
           <Route path="/tasks/:id" element={<TaskDetailPage />} />
           <Route path="/directives" element={<DirectivesListPage />} />
+          <Route path="/notifications" element={<NotificationsPage />} />
           <Route element={<RoleGate roles={['admin']} />}>
             <Route path="/users" element={<UserManagementPage />} />
             <Route path="/admin/health" element={<SystemHealthPage />} />

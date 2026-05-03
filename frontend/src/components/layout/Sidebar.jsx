@@ -7,6 +7,7 @@ import {
   FileText,
   CheckSquare,
   Upload,
+  Bell,
   Users,
   Activity,
   LogOut,
@@ -20,6 +21,7 @@ const navItems = [
   { to: '/directives', icon: FileText, label: 'Directives' },
   { to: '/tasks', icon: CheckSquare, label: 'Tasks' },
   { to: '/judgments/upload', icon: Upload, label: 'Upload Judgment' },
+  { to: '/notifications', icon: Bell, label: 'Notifications' },
 ];
 
 const adminItems = [
