@@ -28,4 +28,16 @@ const extractEntities = async (text) => {
   return data;
 };
 
-module.exports = { checkHealth, extractText, extractEntities };
+const extractDirectives = async (filePath, judgmentDate) => {
+  const form = new FormData();
+  form.append('file', fs.createReadStream(filePath));
+  const params = judgmentDate ? { judgment_date: judgmentDate } : {};
+  const { data } = await nlpClient.post('/extract/directives', form, {
+    headers: form.getHeaders(),
+    params,
+    timeout: 180000,
+  });
+  return data;
+};
+
+module.exports = { checkHealth, extractText, extractEntities, extractDirectives };
