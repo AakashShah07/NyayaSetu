@@ -38,7 +38,7 @@ export default function DirectivesListPage() {
   return (
     <>
       <Topbar title="Directives" />
-      <div className="space-y-4">
+      <div className="mt-6 space-y-5">
         <div className="flex flex-wrap gap-3">
           <Select
             id="dept-filter"
@@ -64,27 +64,27 @@ export default function DirectivesListPage() {
           ) : (
             <>
               <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-slate-200">
-                  <thead className="bg-slate-50">
+                <table className="min-w-full divide-y divide-slate-200 dark:divide-slate-700">
+                  <thead className="bg-slate-50 dark:bg-slate-900">
                     <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500">Directive</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500">Department</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500">Deadline</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500">Confidence</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500">Review</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400">Directive</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400">Department</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400">Deadline</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400">Confidence</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400">Review</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-100 bg-white">
+                  <tbody className="divide-y divide-slate-100 bg-white dark:divide-slate-700 dark:bg-slate-800">
                     {data.items.map((d) => (
                       <tr
                         key={d._id}
-                        className="cursor-pointer hover:bg-slate-50"
+                        className="cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700"
                         onClick={() => d.judgment && navigate(`/judgments/${typeof d.judgment === 'string' ? d.judgment : d.judgment._id}`)}
                       >
-                        <td className="px-6 py-4 text-sm text-slate-800">{truncate(d.directiveText, 80)}</td>
-                        <td className="whitespace-nowrap px-6 py-4 text-sm text-slate-600">{d.responsibleDepartment || '—'}</td>
-                        <td className="whitespace-nowrap px-6 py-4 text-sm text-slate-600">{formatDate(d.deadline)}</td>
-                        <td className="whitespace-nowrap px-6 py-4 text-sm text-slate-600">
+                        <td className="px-6 py-4 text-sm text-slate-800 dark:text-slate-100">{truncate(d.directiveText, 80)}</td>
+                        <td className="whitespace-nowrap px-6 py-4 text-sm text-slate-600 dark:text-slate-300">{d.responsibleDepartment || '—'}</td>
+                        <td className="whitespace-nowrap px-6 py-4 text-sm text-slate-600 dark:text-slate-300">{formatDate(d.deadline)}</td>
+                        <td className="whitespace-nowrap px-6 py-4 text-sm text-slate-600 dark:text-slate-300">
                           {d.confidence != null ? `${Math.round(d.confidence * 100)}%` : '—'}
                         </td>
                         <td className="whitespace-nowrap px-6 py-4">

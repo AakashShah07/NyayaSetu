@@ -48,8 +48,8 @@ export default function StatsCards({ tasks, needsReviewCount = 0, escalatedCount
               <Icon size={24} />
             </div>
             <div>
-              <p className="text-2xl font-bold text-slate-800">{count}</p>
-              <p className="text-sm text-slate-500">{label}</p>
+              <p className="text-2xl font-bold text-slate-800 dark:text-slate-100">{count}</p>
+              <p className="text-sm text-slate-500 dark:text-slate-400">{label}</p>
             </div>
           </div>
         </Card>

@@ -42,7 +42,7 @@ export default function TasksListPage() {
   return (
     <>
       <Topbar title="Tasks" />
-      <div className="space-y-4">
+      <div className="mt-6 space-y-5">
         <TaskFilters filters={filters} onChange={handleFilterChange} />
         <Card>
           {loading ? (

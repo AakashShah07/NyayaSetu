@@ -22,24 +22,24 @@ export default function UpcomingDeadlines({ tasks }) {
         {upcoming.length === 0 ? (
           <p className="px-6 py-8 text-center text-sm text-slate-500">No upcoming deadlines</p>
         ) : (
-          <div className="divide-y divide-slate-100">
+          <div className="divide-y divide-slate-100 dark:divide-slate-700">
             {upcoming.map((task) => {
               const days = daysUntilDue(task.dueDate);
               return (
                 <div
                   key={task._id}
-                  className="flex cursor-pointer items-center justify-between px-6 py-3 hover:bg-slate-50"
+                  className="flex cursor-pointer items-center justify-between px-6 py-3 hover:bg-slate-50 dark:hover:bg-slate-700"
                   onClick={() => navigate(`/tasks/${task._id}`)}
                 >
                   <div className="min-w-0 flex-1">
-                    <p className="truncate text-sm font-medium text-slate-700">{task.title}</p>
+                    <p className="truncate text-sm font-medium text-slate-700 dark:text-slate-200">{task.title}</p>
                     <div className="mt-1 flex items-center gap-2">
                       <StatusBadge status={task.status} />
                       <PriorityBadge priority={task.priority} />
                     </div>
                   </div>
                   <div className="ml-4 text-right">
-                    <p className="text-sm text-slate-500">{formatDate(task.dueDate)}</p>
+                    <p className="text-sm text-slate-500 dark:text-slate-400">{formatDate(task.dueDate)}</p>
                     <p
                       className={clsx(
                         'text-xs font-medium',

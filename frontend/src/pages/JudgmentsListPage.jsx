@@ -56,7 +56,7 @@ export default function JudgmentsListPage() {
   return (
     <>
       <Topbar title="Court Orders" />
-      <div className="space-y-4">
+      <div className="mt-6 space-y-5">
         <div className="flex justify-end">
           <Button onClick={() => navigate('/judgments/upload')}>
             <Upload size={16} />
@@ -71,26 +71,26 @@ export default function JudgmentsListPage() {
           ) : (
             <>
               <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-slate-200">
-                  <thead className="bg-slate-50">
+                <table className="min-w-full divide-y divide-slate-200 dark:divide-slate-700">
+                  <thead className="bg-slate-50 dark:bg-slate-900">
                     <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500">Case ID</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500">Court</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500">Judgment Date</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500">Extraction</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500">Actions</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400">Case ID</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400">Court</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400">Judgment Date</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400">Extraction</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-100 bg-white">
+                  <tbody className="divide-y divide-slate-100 bg-white dark:divide-slate-700 dark:bg-slate-800">
                     {data.items.map((j) => (
                       <tr
                         key={j._id}
-                        className="cursor-pointer hover:bg-slate-50"
+                        className="cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700"
                         onClick={() => navigate(`/judgments/${j._id}`)}
                       >
-                        <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-slate-800">{j.caseId}</td>
-                        <td className="whitespace-nowrap px-6 py-4 text-sm text-slate-600">{j.courtName || '—'}</td>
-                        <td className="whitespace-nowrap px-6 py-4 text-sm text-slate-600">{formatDate(j.judgmentDate)}</td>
+                        <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-slate-800 dark:text-slate-100">{j.caseId}</td>
+                        <td className="whitespace-nowrap px-6 py-4 text-sm text-slate-600 dark:text-slate-300">{j.courtName || '—'}</td>
+                        <td className="whitespace-nowrap px-6 py-4 text-sm text-slate-600 dark:text-slate-300">{formatDate(j.judgmentDate)}</td>
                         <td className="whitespace-nowrap px-6 py-4">
                           <Badge color={EXTRACTION_COLORS[j.extractionStatus] || 'slate'}>
                             {statusLabel(j.extractionStatus)}

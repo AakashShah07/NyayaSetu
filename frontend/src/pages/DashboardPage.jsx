@@ -52,9 +52,9 @@ export default function DashboardPage() {
   return (
     <>
       <Topbar title="Dashboard" />
-      <div className="space-y-6">
+      <div className="mt-6 space-y-8">
         <div className="flex items-center justify-between">
-          <div className="text-xs text-slate-400">
+          <div className="text-xs text-slate-400 dark:text-slate-500">
             {lastUpdated && `Last updated: ${lastUpdated.toLocaleTimeString()}`}
           </div>
           <Button size="sm" variant="ghost" onClick={fetchData}>
@@ -66,7 +66,7 @@ export default function DashboardPage() {
           needsReviewCount={needsReviewCount}
           escalatedCount={tasks.filter((t) => t.escalationLevel > 0).length}
         />
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
           <UpcomingDeadlines tasks={tasks} />
           <RecentActivity updates={updates} />
         </div>
