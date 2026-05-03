@@ -3,7 +3,7 @@ import StatusBadge from '../ui/StatusBadge';
 import PriorityBadge from '../ui/PriorityBadge';
 import EmptyState from '../ui/EmptyState';
 import { formatDate, daysUntilDue, truncate } from '../../utils/formatters';
-import { CheckSquare } from 'lucide-react';
+import { CheckSquare, Flame } from 'lucide-react';
 import clsx from 'clsx';
 
 export default function TaskTable({ tasks }) {
@@ -35,7 +35,12 @@ export default function TaskTable({ tasks }) {
                 onClick={() => navigate(`/tasks/${task._id}`)}
               >
                 <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-slate-800">
-                  {truncate(task.title, 50)}
+                  <span className="inline-flex items-center gap-1.5">
+                    {task.escalationLevel > 0 && (
+                      <Flame size={14} className="text-red-500" title={`Escalation level ${task.escalationLevel}`} />
+                    )}
+                    {truncate(task.title, 50)}
+                  </span>
                 </td>
                 <td className="whitespace-nowrap px-6 py-4 text-sm text-slate-600">
                   {task.department || '—'}

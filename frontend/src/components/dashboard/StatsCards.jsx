@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import { CheckCircle, AlertTriangle, Clock, XCircle, Eye } from 'lucide-react';
+import { CheckCircle, AlertTriangle, Clock, XCircle, Eye, Flame } from 'lucide-react';
 import Card from '../ui/Card';
 
-export default function StatsCards({ tasks, needsReviewCount = 0 }) {
+export default function StatsCards({ tasks, needsReviewCount = 0, escalatedCount = 0 }) {
   const navigate = useNavigate();
   const now = new Date();
   const sevenDays = new Date(now.getTime() + 7 * 86400000);
@@ -29,6 +29,9 @@ export default function StatsCards({ tasks, needsReviewCount = 0 }) {
     { label: 'Completed', count: completed, icon: CheckCircle, color: 'text-green-600 bg-green-50', filter: 'status=completed' },
     ...(needsReviewCount > 0
       ? [{ label: 'Needs Review', count: needsReviewCount, icon: Eye, color: 'text-amber-700 bg-amber-50', path: '/directives?reviewStatus=needs_review' }]
+      : []),
+    ...(escalatedCount > 0
+      ? [{ label: 'Escalated', count: escalatedCount, icon: Flame, color: 'text-red-700 bg-red-50', path: '/tasks' }]
       : []),
   ];
 

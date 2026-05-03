@@ -61,7 +61,11 @@ export default function DashboardPage() {
             <RefreshCw size={14} /> Refresh
           </Button>
         </div>
-        <StatsCards tasks={tasks} needsReviewCount={needsReviewCount} />
+        <StatsCards
+          tasks={tasks}
+          needsReviewCount={needsReviewCount}
+          escalatedCount={tasks.filter((t) => t.escalationLevel > 0).length}
+        />
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
           <UpcomingDeadlines tasks={tasks} />
           <RecentActivity updates={updates} />

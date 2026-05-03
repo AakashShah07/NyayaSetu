@@ -13,7 +13,10 @@ import { useAuth } from '../context/AuthContext';
 import { getTask } from '../api/tasks';
 import { getStatusUpdates } from '../api/statusUpdates';
 import { formatDate, daysUntilDue } from '../utils/formatters';
-import { UserPlus } from 'lucide-react';
+import { UserPlus, Flame } from 'lucide-react';
+import Badge from '../components/ui/Badge';
+import client from '../api/client';
+import toast from 'react-hot-toast';
 import clsx from 'clsx';
 
 export default function TaskDetailPage() {
@@ -75,10 +78,34 @@ export default function TaskDetailPage() {
                     {task.department && (
                       <span className="text-sm text-slate-500">{task.department}</span>
                     )}
+                    {task.escalationLevel > 0 && (
+                      <Badge color="red">
+                        <Flame size={12} className="mr-1 inline" />
+                        Escalation Level {task.escalationLevel}
+                      </Badge>
+                    )}
                     {hasRole('admin') && (
-                      <Button size="sm" variant="ghost" onClick={() => setShowReassign(true)}>
-                        <UserPlus size={14} /> Reassign
-                      </Button>
+                      <>
+                        <Button size="sm" variant="ghost" onClick={() => setShowReassign(true)}>
+                          <UserPlus size={14} /> Reassign
+                        </Button>
+                        {task.status !== 'completed' && task.escalationLevel < 3 && (
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            className="text-red-600 hover:bg-red-50"
+                            onClick={async () => {
+                              try {
+                                await client.put(`/api/tasks/${task._id}`, { escalationLevel: (task.escalationLevel || 0) + 1 });
+                                toast.success('Task escalated');
+                                fetchData();
+                              } catch { toast.error('Escalation failed'); }
+                            }}
+                          >
+                            <Flame size={14} /> Escalate
+                          </Button>
+                        )}
+                      </>
                     )}
                   </div>
                 </div>
