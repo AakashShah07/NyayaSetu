@@ -7,17 +7,22 @@ import Badge from '../components/ui/Badge';
 import Spinner from '../components/ui/Spinner';
 import Pagination from '../components/ui/Pagination';
 import EmptyState from '../components/ui/EmptyState';
-import { getJudgments } from '../api/judgments';
+import ConfirmDeleteModal from '../components/admin/ConfirmDeleteModal';
+import { getJudgments, deleteJudgment } from '../api/judgments';
 import { extractDirectives } from '../api/nlp';
+import { useAuth } from '../context/AuthContext';
 import { usePagination } from '../hooks/usePagination';
 import { formatDate, statusLabel } from '../utils/formatters';
 import { EXTRACTION_COLORS } from '../utils/constants';
-import { Scale, Upload, Zap } from 'lucide-react';
+import { Scale, Upload, Zap, Trash2 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 export default function JudgmentsListPage() {
   const navigate = useNavigate();
+  const { hasRole } = useAuth();
   const { page, setPage } = usePagination();
+  const [deleteTarget, setDeleteTarget] = useState(null);
+  const [deleting, setDeleting] = useState(false);
   const [data, setData] = useState({ items: [], pagination: null });
   const [loading, setLoading] = useState(true);
   const [extractingId, setExtractingId] = useState(null);
@@ -92,17 +97,29 @@ export default function JudgmentsListPage() {
                           </Badge>
                         </td>
                         <td className="whitespace-nowrap px-6 py-4">
-                          {j.extractionStatus !== 'completed' && (
-                            <Button
-                              size="sm"
-                              variant="secondary"
-                              loading={extractingId === j._id}
-                              onClick={(e) => handleExtract(e, j._id)}
-                            >
-                              <Zap size={14} />
-                              Extract
-                            </Button>
-                          )}
+                          <div className="flex gap-1">
+                            {j.extractionStatus !== 'completed' && (
+                              <Button
+                                size="sm"
+                                variant="secondary"
+                                loading={extractingId === j._id}
+                                onClick={(e) => handleExtract(e, j._id)}
+                              >
+                                <Zap size={14} />
+                                Extract
+                              </Button>
+                            )}
+                            {hasRole('admin') && (
+                              <Button
+                                size="sm"
+                                variant="ghost"
+                                className="text-red-500 hover:bg-red-50"
+                                onClick={(e) => { e.stopPropagation(); setDeleteTarget(j); }}
+                              >
+                                <Trash2 size={14} />
+                              </Button>
+                            )}
+                          </div>
                         </td>
                       </tr>
                     ))}
@@ -119,6 +136,27 @@ export default function JudgmentsListPage() {
           )}
         </Card>
       </div>
+
+      <ConfirmDeleteModal
+        isOpen={!!deleteTarget}
+        onClose={() => setDeleteTarget(null)}
+        loading={deleting}
+        title="Delete Judgment"
+        message={`Delete "${deleteTarget?.caseId}"? This will also delete all associated directives and tasks.`}
+        onConfirm={async () => {
+          setDeleting(true);
+          try {
+            await deleteJudgment(deleteTarget._id);
+            toast.success('Judgment deleted');
+            setDeleteTarget(null);
+            fetchData();
+          } catch (err) {
+            toast.error(err.response?.data?.message || 'Delete failed');
+          } finally {
+            setDeleting(false);
+          }
+        }}
+      />
     </>
   );
 }

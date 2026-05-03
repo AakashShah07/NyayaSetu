@@ -10,6 +10,7 @@ router.get('/', ctrl.getAll);
 router.get('/:id', ctrl.getOne);
 router.post('/', createValidator, validate, ctrl.create);
 router.put('/:id', updateValidator, validate, ctrl.update);
+router.put('/:id/reassign', authorize('admin'), ctrl.reassign);
 router.delete('/:id', authorize('admin'), ctrl.remove);
 
 module.exports = router;

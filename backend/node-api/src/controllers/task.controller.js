@@ -90,6 +90,33 @@ const update = async (req, res, next) => {
   }
 };
 
+const reassign = async (req, res, next) => {
+  try {
+    const task = await Task.findById(req.params.id);
+    if (!task) return error(res, 'Task not found', 404);
+
+    const prevDept = task.department;
+    if (req.body.department) task.department = req.body.department;
+    if (req.body.assignedTo) task.assignedTo = req.body.assignedTo;
+    await task.save();
+
+    await StatusUpdate.create({
+      task: task._id,
+      previousStatus: task.status,
+      newStatus: task.status,
+      updatedBy: req.user.userId,
+      notes: `Reassigned from ${prevDept} to ${task.department}`,
+    });
+
+    const populated = await Task.findById(task._id)
+      .populate('assignedTo', 'name email')
+      .populate('directive', 'directiveText deadline');
+    return success(res, populated, 'Task reassigned');
+  } catch (err) {
+    next(err);
+  }
+};
+
 const remove = async (req, res, next) => {
   try {
     const task = await Task.findByIdAndDelete(req.params.id);
@@ -100,4 +127,4 @@ const remove = async (req, res, next) => {
   }
 };
 
-module.exports = { getAll, getOne, create, update, remove };
+module.exports = { getAll, getOne, create, update, reassign, remove };

@@ -8,6 +8,7 @@ import {
   CheckSquare,
   Upload,
   Users,
+  Activity,
   LogOut,
   X,
 } from 'lucide-react';
@@ -23,6 +24,7 @@ const navItems = [
 
 const adminItems = [
   { to: '/users', icon: Users, label: 'User Management' },
+  { to: '/admin/health', icon: Activity, label: 'System Health' },
 ];
 
 export default function Sidebar() {

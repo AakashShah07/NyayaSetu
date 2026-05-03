@@ -2,21 +2,27 @@ import { useState, useEffect, useCallback } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Topbar from '../components/layout/Topbar';
 import Card, { CardHeader, CardBody } from '../components/ui/Card';
+import Button from '../components/ui/Button';
 import StatusBadge from '../components/ui/StatusBadge';
 import PriorityBadge from '../components/ui/PriorityBadge';
 import Spinner from '../components/ui/Spinner';
 import TaskStatusTimeline from '../components/tasks/TaskStatusTimeline';
 import TaskStatusUpdateForm from '../components/tasks/TaskStatusUpdateForm';
+import ReassignModal from '../components/admin/ReassignModal';
+import { useAuth } from '../context/AuthContext';
 import { getTask } from '../api/tasks';
 import { getStatusUpdates } from '../api/statusUpdates';
 import { formatDate, daysUntilDue } from '../utils/formatters';
+import { UserPlus } from 'lucide-react';
 import clsx from 'clsx';
 
 export default function TaskDetailPage() {
   const { id } = useParams();
+  const { hasRole } = useAuth();
   const [task, setTask] = useState(null);
   const [updates, setUpdates] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showReassign, setShowReassign] = useState(false);
 
   const fetchData = useCallback(async () => {
     try {
@@ -68,6 +74,11 @@ export default function TaskDetailPage() {
                     <PriorityBadge priority={task.priority} />
                     {task.department && (
                       <span className="text-sm text-slate-500">{task.department}</span>
+                    )}
+                    {hasRole('admin') && (
+                      <Button size="sm" variant="ghost" onClick={() => setShowReassign(true)}>
+                        <UserPlus size={14} /> Reassign
+                      </Button>
                     )}
                   </div>
                 </div>
@@ -134,6 +145,15 @@ export default function TaskDetailPage() {
           </Card>
         </div>
       </div>
+
+      {task && (
+        <ReassignModal
+          isOpen={showReassign}
+          onClose={() => setShowReassign(false)}
+          task={task}
+          onReassigned={fetchData}
+        />
+      )}
     </>
   );
 }
