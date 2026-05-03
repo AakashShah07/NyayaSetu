@@ -71,12 +71,12 @@ export default function TaskDetailPage() {
             <CardBody>
               <div className="flex flex-wrap items-start justify-between gap-4">
                 <div>
-                  <h2 className="text-lg font-semibold text-slate-800">{task.title}</h2>
+                  <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-100">{task.title}</h2>
                   <div className="mt-2 flex flex-wrap items-center gap-2">
                     <StatusBadge status={task.status} />
                     <PriorityBadge priority={task.priority} />
                     {task.department && (
-                      <span className="text-sm text-slate-500">{task.department}</span>
+                      <span className="text-sm text-slate-500 dark:text-slate-400">{task.department}</span>
                     )}
                     {task.escalationLevel > 0 && (
                       <Badge color="red">
@@ -110,7 +110,7 @@ export default function TaskDetailPage() {
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="text-sm text-slate-500">Due: {formatDate(task.dueDate)}</p>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">Due: {formatDate(task.dueDate)}</p>
                   {days !== null && task.status !== 'completed' && (
                     <p
                       className={clsx(
@@ -124,14 +124,14 @@ export default function TaskDetailPage() {
                 </div>
               </div>
               {task.description && (
-                <p className="mt-4 text-sm text-slate-600 whitespace-pre-wrap">{task.description}</p>
+                <p className="mt-4 text-sm text-slate-600 dark:text-slate-300 whitespace-pre-wrap">{task.description}</p>
               )}
             </CardBody>
           </Card>
 
           {task.judgment && (
             <Card>
-              <CardHeader><h3 className="text-sm font-semibold text-slate-800">Linked Judgment</h3></CardHeader>
+              <CardHeader><h3 className="text-sm font-semibold text-slate-800 dark:text-slate-100">Linked Judgment</h3></CardHeader>
               <CardBody>
                 <Link to={`/judgments/${typeof task.judgment === 'string' ? task.judgment : task.judgment._id}`} className="text-sm text-blue-600 hover:underline">
                   {task.judgment.caseId || 'View Judgment'}
@@ -142,7 +142,7 @@ export default function TaskDetailPage() {
 
           {task.evidenceFiles?.length > 0 && (
             <Card>
-              <CardHeader><h3 className="text-sm font-semibold text-slate-800">Evidence Files</h3></CardHeader>
+              <CardHeader><h3 className="text-sm font-semibold text-slate-800 dark:text-slate-100">Evidence Files</h3></CardHeader>
               <CardBody>
                 <ul className="space-y-1">
                   {task.evidenceFiles.map((f, i) => (
@@ -158,14 +158,14 @@ export default function TaskDetailPage() {
 
         <div className="space-y-6">
           <Card>
-            <CardHeader><h3 className="text-sm font-semibold text-slate-800">Update Status</h3></CardHeader>
+            <CardHeader><h3 className="text-sm font-semibold text-slate-800 dark:text-slate-100">Update Status</h3></CardHeader>
             <CardBody>
               <TaskStatusUpdateForm task={task} onUpdated={fetchData} />
             </CardBody>
           </Card>
 
           <Card>
-            <CardHeader><h3 className="text-sm font-semibold text-slate-800">Status History</h3></CardHeader>
+            <CardHeader><h3 className="text-sm font-semibold text-slate-800 dark:text-slate-100">Status History</h3></CardHeader>
             <CardBody>
               <TaskStatusTimeline updates={updates} />
             </CardBody>
