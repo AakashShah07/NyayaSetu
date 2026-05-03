@@ -10,6 +10,7 @@ router.use(protect);
 router.get('/', ctrl.getAll);
 router.get('/:id', ctrl.getOne);
 router.post('/upload', uploadMiddleware.single('file'), ctrl.upload);
+router.post('/upload-bulk', uploadMiddleware.array('files', 10), ctrl.bulkUpload);
 router.put('/:id', updateValidator, validate, ctrl.update);
 router.delete('/:id', authorize('admin'), ctrl.remove);
 

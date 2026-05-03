@@ -1,4 +1,7 @@
 const Judgment = require('../models/Judgment');
+const Directive = require('../models/Directive');
+const Task = require('../models/Task');
+const extractionQueue = require('../services/extractionQueue');
 const { success, error } = require('../utils/apiResponse');
 
 const getAll = async (req, res, next) => {
@@ -68,14 +71,56 @@ const update = async (req, res, next) => {
   }
 };
 
-const remove = async (req, res, next) => {
+const bulkUpload = async (req, res, next) => {
   try {
-    const judgment = await Judgment.findByIdAndDelete(req.params.id);
-    if (!judgment) return error(res, 'Judgment not found', 404);
-    return success(res, null, 'Judgment deleted');
+    if (!req.files || req.files.length === 0) {
+      return error(res, 'At least one PDF file is required', 400);
+    }
+
+    const caseIds = req.body.caseIds;
+    const parsedIds = Array.isArray(caseIds) ? caseIds : caseIds ? [caseIds] : [];
+
+    const created = [];
+    for (let i = 0; i < req.files.length; i++) {
+      const file = req.files[i];
+      const caseId = parsedIds[i] || `BULK-${Date.now()}-${i + 1}`;
+
+      const judgment = await Judgment.create({
+        caseId,
+        fileUrl: file.path,
+        originalFilename: file.originalname,
+        uploadedBy: req.user.userId,
+      });
+      created.push(judgment);
+      extractionQueue.enqueue(judgment._id.toString());
+    }
+
+    return success(res, {
+      uploaded: created.length,
+      judgments: created,
+      queueStatus: extractionQueue.getStatus(),
+    }, `${created.length} judgments uploaded and queued for extraction`, 201);
   } catch (err) {
     next(err);
   }
 };
 
-module.exports = { getAll, getOne, upload, update, remove };
+const remove = async (req, res, next) => {
+  try {
+    const judgment = await Judgment.findById(req.params.id);
+    if (!judgment) return error(res, 'Judgment not found', 404);
+
+    // Cascade delete directives and tasks
+    const directives = await Directive.find({ judgment: judgment._id });
+    const directiveIds = directives.map((d) => d._id);
+    await Task.deleteMany({ directive: { $in: directiveIds } });
+    await Directive.deleteMany({ judgment: judgment._id });
+    await Judgment.findByIdAndDelete(req.params.id);
+
+    return success(res, null, 'Judgment and associated records deleted');
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = { getAll, getOne, upload, bulkUpload, update, remove };
