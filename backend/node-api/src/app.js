@@ -38,6 +38,7 @@ app.use('/api/tasks', require('./routes/task.routes'));
 app.use('/api/status-updates', require('./routes/statusUpdate.routes'));
 app.use('/api/users', require('./routes/user.routes'));
 app.use('/api/nlp', require('./routes/nlp.routes'));
+app.use('/api/notifications', require('./routes/notification.routes'));
 
 // Error handler
 app.use(errorHandler);
