@@ -14,6 +14,7 @@ const getAll = async (req, res, next) => {
     if (req.query.department) filter.department = req.query.department;
     if (req.query.assignedTo) filter.assignedTo = req.query.assignedTo;
     if (req.query.priority) filter.priority = req.query.priority;
+    if (req.query.judgment) filter.judgment = req.query.judgment;
 
     const [tasks, total] = await Promise.all([
       Task.find(filter).sort(sort).skip(skip).limit(limit)

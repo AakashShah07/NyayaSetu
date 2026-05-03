@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
@@ -18,6 +19,9 @@ app.use(morgan('dev'));
 // Body parsing
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
+
+// Static file serving for uploaded PDFs
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 // Rate limiting
 app.use('/api', generalLimiter);
