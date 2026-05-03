@@ -7,6 +7,12 @@ const start = async () => {
   app.listen(env.port, () => {
     console.log(`NyayaSetu API running on port ${env.port} [${env.nodeEnv}]`);
   });
+
+  // Start alert scheduler (skip in test environment)
+  if (env.nodeEnv !== 'test') {
+    const alertScheduler = require('./services/alertScheduler');
+    alertScheduler.start();
+  }
 };
 
 start();
