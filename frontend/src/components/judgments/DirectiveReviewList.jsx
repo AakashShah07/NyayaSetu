@@ -101,7 +101,7 @@ export default function DirectiveReviewList({ directives, onUpdated, showFilter 
               {isEditing ? (
                 <div className="space-y-3">
                   <textarea
-                    className="block w-full rounded-md border-slate-300 text-sm shadow-sm focus:border-navy focus:ring-navy"
+                    className="block w-full rounded-md border-slate-300 text-sm shadow-sm focus:border-navy focus:ring-navy dark:bg-slate-700 dark:border-slate-600 dark:text-slate-200"
                     rows={3}
                     value={editForm.directiveText}
                     onChange={(e) => setEditForm({ ...editForm, directiveText: e.target.value })}
@@ -130,8 +130,8 @@ export default function DirectiveReviewList({ directives, onUpdated, showFilter 
               ) : (
                 <div className="flex items-start justify-between gap-4">
                   <div className="min-w-0 flex-1">
-                    <p className="text-sm text-slate-800">{d.directiveText}</p>
-                    <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-slate-500">
+                    <p className="text-sm text-slate-800 dark:text-slate-100">{d.directiveText}</p>
+                    <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
                       {d.responsibleDepartment && <span>{d.responsibleDepartment}</span>}
                       {d.deadline && <span>Due: {formatDate(d.deadline)}</span>}
                       {d.deadlineText && <span className="italic">"{d.deadlineText}"</span>}

@@ -59,41 +59,41 @@ export default function JudgmentDetailPage() {
           <CardBody>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
               <div>
-                <p className="text-xs uppercase text-slate-500">Case ID</p>
-                <p className="font-semibold text-slate-800">{judgment.caseId}</p>
+                <p className="text-xs uppercase text-slate-500 dark:text-slate-400">Case ID</p>
+                <p className="font-semibold text-slate-800 dark:text-slate-100">{judgment.caseId}</p>
               </div>
               <div>
-                <p className="text-xs uppercase text-slate-500">Court</p>
-                <p className="text-sm text-slate-700">{judgment.courtName || '—'}</p>
+                <p className="text-xs uppercase text-slate-500 dark:text-slate-400">Court</p>
+                <p className="text-sm text-slate-700 dark:text-slate-300">{judgment.courtName || '—'}</p>
               </div>
               <div>
-                <p className="text-xs uppercase text-slate-500">Judgment Date</p>
-                <p className="text-sm text-slate-700">{formatDate(judgment.judgmentDate)}</p>
+                <p className="text-xs uppercase text-slate-500 dark:text-slate-400">Judgment Date</p>
+                <p className="text-sm text-slate-700 dark:text-slate-300">{formatDate(judgment.judgmentDate)}</p>
               </div>
               <div>
-                <p className="text-xs uppercase text-slate-500">Filing Date</p>
-                <p className="text-sm text-slate-700">{formatDate(judgment.filingDate)}</p>
+                <p className="text-xs uppercase text-slate-500 dark:text-slate-400">Filing Date</p>
+                <p className="text-sm text-slate-700 dark:text-slate-300">{formatDate(judgment.filingDate)}</p>
               </div>
               <div>
-                <p className="text-xs uppercase text-slate-500">Judges</p>
-                <p className="text-sm text-slate-700">{judgment.judges?.join(', ') || '—'}</p>
+                <p className="text-xs uppercase text-slate-500 dark:text-slate-400">Judges</p>
+                <p className="text-sm text-slate-700 dark:text-slate-300">{judgment.judges?.join(', ') || '—'}</p>
               </div>
               <div>
-                <p className="text-xs uppercase text-slate-500">Parties</p>
-                <p className="text-sm text-slate-700">
+                <p className="text-xs uppercase text-slate-500 dark:text-slate-400">Parties</p>
+                <p className="text-sm text-slate-700 dark:text-slate-300">
                   {judgment.parties?.petitioner || '—'} v. {judgment.parties?.respondent || '—'}
                 </p>
               </div>
               <div>
-                <p className="text-xs uppercase text-slate-500">Extraction Status</p>
+                <p className="text-xs uppercase text-slate-500 dark:text-slate-400">Extraction Status</p>
                 <Badge color={EXTRACTION_COLORS[judgment.extractionStatus] || 'slate'}>
                   {statusLabel(judgment.extractionStatus)}
                 </Badge>
               </div>
               {judgment.originalFilename && (
                 <div>
-                  <p className="text-xs uppercase text-slate-500">PDF File</p>
-                  <p className="text-sm text-slate-700">{judgment.originalFilename}</p>
+                  <p className="text-xs uppercase text-slate-500 dark:text-slate-400">PDF File</p>
+                  <p className="text-sm text-slate-700 dark:text-slate-300">{judgment.originalFilename}</p>
                 </div>
               )}
             </div>
@@ -110,7 +110,7 @@ export default function JudgmentDetailPage() {
         )}
 
         <div>
-          <div className="flex gap-4 border-b border-slate-200">
+          <div className="flex gap-4 border-b border-slate-200 dark:border-slate-700">
             {['directives'].map((t) => (
               <button
                 key={t}
