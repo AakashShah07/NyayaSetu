@@ -4,11 +4,12 @@ const Notification = require('../models/Notification');
 const { sendAlertEmail, deadlineReminderHtml } = require('./emailService');
 const { escalateTask } = require('./escalationService');
 
+// Ordered most-urgent-first so the first match is the most severe applicable rule
 const ALERT_RULES = [
-  { daysThreshold: 30, priority: 'low', channel: 'dashboard' },
-  { daysThreshold: 10, priority: 'medium', channel: 'dashboard' },
-  { daysThreshold: 5, priority: 'high', channel: 'both' },
   { daysThreshold: 0, priority: 'critical', channel: 'both', escalate: true },
+  { daysThreshold: 5, priority: 'high', channel: 'both' },
+  { daysThreshold: 10, priority: 'medium', channel: 'dashboard' },
+  { daysThreshold: 30, priority: 'low', channel: 'dashboard' },
 ];
 
 const ONE_DAY_MS = 86400000;
