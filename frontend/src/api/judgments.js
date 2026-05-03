@@ -17,3 +17,9 @@ export const updateJudgment = (id, data) =>
 
 export const deleteJudgment = (id) =>
   client.delete(`/api/judgments/${id}`).then((r) => r.data);
+
+export const bulkUploadJudgments = (formData) =>
+  client.post('/api/judgments/upload-bulk', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+    timeout: 120000,
+  }).then((r) => r.data);

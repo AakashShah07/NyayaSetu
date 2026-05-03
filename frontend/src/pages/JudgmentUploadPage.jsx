@@ -5,6 +5,7 @@ import Card, { CardHeader, CardBody } from '../components/ui/Card';
 import Button from '../components/ui/Button';
 import JudgmentUploadForm from '../components/judgments/JudgmentUploadForm';
 import ExtractionProgress from '../components/judgments/ExtractionProgress';
+import BulkExtractionProgress from '../components/judgments/BulkExtractionProgress';
 import DirectiveReviewList from '../components/judgments/DirectiveReviewList';
 import { getDirectives } from '../api/directives';
 import { ArrowRight } from 'lucide-react';
@@ -12,11 +13,20 @@ import { ArrowRight } from 'lucide-react';
 export default function JudgmentUploadPage() {
   const navigate = useNavigate();
   const [step, setStep] = useState(1); // 1=upload, 2=extract, 3=review
+  const [mode, setMode] = useState('single'); // 'single' or 'bulk'
   const [judgment, setJudgment] = useState(null);
+  const [bulkJudgments, setBulkJudgments] = useState([]);
   const [directives, setDirectives] = useState([]);
 
   const handleUploaded = (j) => {
     setJudgment(j);
+    setMode('single');
+    setStep(2);
+  };
+
+  const handleBulkUploaded = (data) => {
+    setBulkJudgments(data.judgments || []);
+    setMode('bulk');
     setStep(2);
   };
 
@@ -30,6 +40,10 @@ export default function JudgmentUploadPage() {
       } catch { /* ignore */ }
     }
     setStep(3);
+  };
+
+  const handleBulkComplete = () => {
+    navigate('/judgments');
   };
 
   const fetchDirectives = async () => {
@@ -68,12 +82,12 @@ export default function JudgmentUploadPage() {
           <Card>
             <CardHeader><h3 className="text-sm font-semibold text-slate-800">Upload Court Judgment PDF</h3></CardHeader>
             <CardBody>
-              <JudgmentUploadForm onUploaded={handleUploaded} />
+              <JudgmentUploadForm onUploaded={handleUploaded} onBulkUploaded={handleBulkUploaded} />
             </CardBody>
           </Card>
         )}
 
-        {step === 2 && judgment && (
+        {step === 2 && mode === 'single' && judgment && (
           <Card>
             <CardHeader><h3 className="text-sm font-semibold text-slate-800">Extract Directives</h3></CardHeader>
             <CardBody>
@@ -85,7 +99,19 @@ export default function JudgmentUploadPage() {
           </Card>
         )}
 
-        {step === 3 && (
+        {step === 2 && mode === 'bulk' && (
+          <Card>
+            <CardHeader><h3 className="text-sm font-semibold text-slate-800">Bulk Extraction Progress</h3></CardHeader>
+            <CardBody>
+              <p className="mb-4 text-sm text-slate-600">
+                {bulkJudgments.length} judgments uploaded and queued for extraction.
+              </p>
+              <BulkExtractionProgress judgments={bulkJudgments} onAllComplete={handleBulkComplete} />
+            </CardBody>
+          </Card>
+        )}
+
+        {step === 3 && mode === 'single' && (
           <Card>
             <CardHeader><h3 className="text-sm font-semibold text-slate-800">Review Extracted Directives</h3></CardHeader>
             <CardBody>
