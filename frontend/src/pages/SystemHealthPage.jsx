@@ -38,10 +38,10 @@ export default function SystemHealthPage() {
   return (
     <>
       <Topbar title="System Health" />
-      <div className="space-y-6">
+      <div className="mt-6 space-y-6">
         {/* NLP Service */}
         <Card>
-          <CardHeader><h3 className="text-sm font-semibold text-slate-800">NLP Service</h3></CardHeader>
+          <CardHeader><h3 className="text-sm font-semibold text-slate-800 dark:text-slate-100">NLP Service</h3></CardHeader>
           <CardBody>
             <div className="flex items-center gap-3">
               <Activity size={20} className={stats.nlpService.healthy ? 'text-green-500' : 'text-red-500'} />
@@ -64,8 +64,8 @@ export default function SystemHealthPage() {
                 <div className="flex items-center gap-3">
                   <Icon size={20} className={color} />
                   <div>
-                    <p className="text-2xl font-bold text-slate-800">{count}</p>
-                    <p className="text-sm text-slate-500">{label}</p>
+                    <p className="text-2xl font-bold text-slate-800 dark:text-slate-100">{count}</p>
+                    <p className="text-sm text-slate-500 dark:text-slate-400">{label}</p>
                   </div>
                 </div>
               </CardBody>
@@ -75,28 +75,28 @@ export default function SystemHealthPage() {
 
         {/* Extraction Status */}
         <Card>
-          <CardHeader><h3 className="text-sm font-semibold text-slate-800">Extraction Status</h3></CardHeader>
+          <CardHeader><h3 className="text-sm font-semibold text-slate-800 dark:text-slate-100">Extraction Status</h3></CardHeader>
           <CardBody>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
               <div className="flex items-center gap-3">
                 <AlertTriangle size={20} className="text-amber-500" />
                 <div>
-                  <p className="text-lg font-bold">{stats.extraction.pending}</p>
-                  <p className="text-xs text-slate-500">Pending</p>
+                  <p className="text-lg font-bold text-slate-800 dark:text-slate-100">{stats.extraction.pending}</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">Pending</p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
                 <AlertTriangle size={20} className="text-red-500" />
                 <div>
-                  <p className="text-lg font-bold">{stats.extraction.failed}</p>
-                  <p className="text-xs text-slate-500">Failed</p>
+                  <p className="text-lg font-bold text-slate-800 dark:text-slate-100">{stats.extraction.failed}</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">Failed</p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
                 <AlertTriangle size={20} className="text-amber-600" />
                 <div>
-                  <p className="text-lg font-bold">{stats.extraction.needsReview}</p>
-                  <p className="text-xs text-slate-500">Needs Admin Review</p>
+                  <p className="text-lg font-bold text-slate-800 dark:text-slate-100">{stats.extraction.needsReview}</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">Needs Admin Review</p>
                 </div>
               </div>
             </div>
@@ -105,24 +105,24 @@ export default function SystemHealthPage() {
 
         {/* Queue */}
         <Card>
-          <CardHeader><h3 className="text-sm font-semibold text-slate-800">Processing Queue</h3></CardHeader>
+          <CardHeader><h3 className="text-sm font-semibold text-slate-800 dark:text-slate-100">Processing Queue</h3></CardHeader>
           <CardBody>
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
               <div>
-                <p className="text-lg font-bold">{stats.queue.queueLength}</p>
-                <p className="text-xs text-slate-500">In Queue</p>
+                <p className="text-lg font-bold text-slate-800 dark:text-slate-100">{stats.queue.queueLength}</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400">In Queue</p>
               </div>
               <div>
-                <p className="text-lg font-bold">{stats.queue.processing ? 'Yes' : 'Idle'}</p>
-                <p className="text-xs text-slate-500">Processing</p>
+                <p className="text-lg font-bold text-slate-800 dark:text-slate-100">{stats.queue.processing ? 'Yes' : 'Idle'}</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400">Processing</p>
               </div>
               <div>
-                <p className="text-lg font-bold">{stats.queue.completed}</p>
-                <p className="text-xs text-slate-500">Completed</p>
+                <p className="text-lg font-bold text-slate-800 dark:text-slate-100">{stats.queue.completed}</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400">Completed</p>
               </div>
               <div>
-                <p className="text-lg font-bold">{stats.queue.failed}</p>
-                <p className="text-xs text-slate-500">Failed</p>
+                <p className="text-lg font-bold text-slate-800 dark:text-slate-100">{stats.queue.failed}</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400">Failed</p>
               </div>
             </div>
           </CardBody>

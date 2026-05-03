@@ -53,6 +53,7 @@ export default function UserManagementPage() {
   return (
     <>
       <Topbar title="User Management" />
+      <div className="mt-6" />
       <Card>
         {loading ? (
           <div className="flex justify-center py-12"><Spinner /></div>
@@ -60,26 +61,26 @@ export default function UserManagementPage() {
           <EmptyState icon={Users} message="No users found" />
         ) : (
           <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-slate-200">
-              <thead className="bg-slate-50">
+            <table className="min-w-full divide-y divide-slate-200 dark:divide-slate-700">
+              <thead className="bg-slate-50 dark:bg-slate-900">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500">Name</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500">Email</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500">Role</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500">Department</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500">Active</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500">Actions</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400">Name</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400">Email</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400">Role</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400">Department</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400">Active</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100 bg-white">
+              <tbody className="divide-y divide-slate-100 bg-white dark:divide-slate-700 dark:bg-slate-800">
                 {users.map((u) => (
                   <tr key={u._id}>
-                    <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-slate-800">{u.name}</td>
-                    <td className="whitespace-nowrap px-6 py-4 text-sm text-slate-600">{u.email}</td>
+                    <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-slate-800 dark:text-slate-100">{u.name}</td>
+                    <td className="whitespace-nowrap px-6 py-4 text-sm text-slate-600 dark:text-slate-300">{u.email}</td>
                     <td className="whitespace-nowrap px-6 py-4">
                       <Badge color={u.role === 'admin' ? 'purple' : 'blue'}>{u.role?.replace('_', ' ')}</Badge>
                     </td>
-                    <td className="whitespace-nowrap px-6 py-4 text-sm text-slate-600">{u.department}</td>
+                    <td className="whitespace-nowrap px-6 py-4 text-sm text-slate-600 dark:text-slate-300">{u.department}</td>
                     <td className="whitespace-nowrap px-6 py-4">
                       <Badge color={u.isActive ? 'green' : 'red'}>{u.isActive ? 'Active' : 'Inactive'}</Badge>
                     </td>
@@ -116,9 +117,9 @@ export default function UserManagementPage() {
               id="edit-active"
               checked={form.isActive}
               onChange={(e) => setForm({ ...form, isActive: e.target.checked })}
-              className="rounded border-slate-300 text-navy focus:ring-navy"
+              className="rounded border-slate-300 text-navy focus:ring-navy dark:border-slate-600 dark:bg-slate-700"
             />
-            <label htmlFor="edit-active" className="text-sm text-slate-700">Active</label>
+            <label htmlFor="edit-active" className="text-sm text-slate-700 dark:text-slate-300">Active</label>
           </div>
           <div className="flex justify-end gap-3 pt-2">
             <Button variant="secondary" onClick={() => setEditing(null)}>Cancel</Button>
