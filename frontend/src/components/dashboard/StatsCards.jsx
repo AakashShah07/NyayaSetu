@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import { CheckCircle, AlertTriangle, Clock, XCircle } from 'lucide-react';
+import { CheckCircle, AlertTriangle, Clock, XCircle, Eye } from 'lucide-react';
 import Card from '../ui/Card';
 
-export default function StatsCards({ tasks }) {
+export default function StatsCards({ tasks, needsReviewCount = 0 }) {
   const navigate = useNavigate();
   const now = new Date();
   const sevenDays = new Date(now.getTime() + 7 * 86400000);
@@ -27,15 +27,18 @@ export default function StatsCards({ tasks }) {
     { label: 'At Risk', count: atRisk, icon: AlertTriangle, color: 'text-amber-600 bg-amber-50', filter: '' },
     { label: 'Overdue', count: overdue, icon: XCircle, color: 'text-red-600 bg-red-50', filter: 'status=overdue' },
     { label: 'Completed', count: completed, icon: CheckCircle, color: 'text-green-600 bg-green-50', filter: 'status=completed' },
+    ...(needsReviewCount > 0
+      ? [{ label: 'Needs Review', count: needsReviewCount, icon: Eye, color: 'text-amber-700 bg-amber-50', path: '/directives?reviewStatus=needs_review' }]
+      : []),
   ];
 
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      {cards.map(({ label, count, icon: Icon, color, filter }) => (
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
+      {cards.map(({ label, count, icon: Icon, color, filter, path }) => (
         <Card
           key={label}
           className="cursor-pointer transition-shadow hover:shadow-md"
-          onClick={() => navigate(filter ? `/tasks?${filter}` : '/tasks')}
+          onClick={() => navigate(path || (filter ? `/tasks?${filter}` : '/tasks'))}
         >
           <div className="flex items-center gap-4 p-5">
             <div className={`flex h-12 w-12 items-center justify-center rounded-lg ${color}`}>
