@@ -10,6 +10,7 @@ import {
   Bell,
   Users,
   BarChart3,
+  ClipboardList,
   Activity,
   LogOut,
   X,
@@ -23,6 +24,7 @@ const navItems = [
   { to: '/tasks', icon: CheckSquare, label: 'Tasks' },
   { to: '/judgments/upload', icon: Upload, label: 'Upload Judgment' },
   { to: '/analytics', icon: BarChart3, label: 'Analytics' },
+  { to: '/reports', icon: ClipboardList, label: 'Reports' },
   { to: '/notifications', icon: Bell, label: 'Notifications' },
 ];
 
