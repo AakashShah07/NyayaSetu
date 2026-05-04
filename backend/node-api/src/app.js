@@ -3,6 +3,8 @@ const path = require('path');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpec = require('./config/swagger');
 const { generalLimiter } = require('./middleware/rateLimiter');
 const errorHandler = require('./middleware/errorHandler');
 
@@ -25,6 +27,13 @@ app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 // Rate limiting
 app.use('/api', generalLimiter);
+
+// Swagger docs
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
+  customSiteTitle: 'NyayaSetu API Docs',
+  customCss: '.swagger-ui .topbar { display: none }',
+}));
+app.get('/api/docs.json', (req, res) => res.json(swaggerSpec));
 
 // Routes
 app.get('/api/health', (req, res) => {
