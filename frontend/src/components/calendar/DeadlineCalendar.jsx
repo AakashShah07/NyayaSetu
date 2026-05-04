@@ -6,6 +6,16 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 const locales = { 'en-US': enUS };
 const localizer = dateFnsLocalizer({ format, parse, startOfWeek, getDay, locales });
 
+const messages = {
+  today: 'Today',
+  previous: 'Prev',
+  next: 'Next',
+  month: 'Month',
+  week: 'Week',
+  agenda: 'Agenda',
+  showMore: (count) => `+${count} more`,
+};
+
 export default function DeadlineCalendar({ events, onSelectEvent }) {
   const eventStyleGetter = (event) => ({
     style: {
@@ -19,7 +29,7 @@ export default function DeadlineCalendar({ events, onSelectEvent }) {
   });
 
   return (
-    <div className="h-[620px] rounded-lg">
+    <div className="h-[620px] rounded-lg [&_.rbc-toolbar]:pointer-events-auto [&_.rbc-toolbar_button]:pointer-events-auto">
       <Calendar
         localizer={localizer}
         events={events}
@@ -30,6 +40,7 @@ export default function DeadlineCalendar({ events, onSelectEvent }) {
         views={['month', 'week', 'agenda']}
         defaultView="month"
         popup
+        messages={messages}
         tooltipAccessor={(event) => event.title}
       />
     </div>

@@ -27,6 +27,8 @@ body {
 .dark .rbc-toolbar button {
   color: #e2e8f0;
   border-color: #475569;
+  background-color: #1e293b;
+  cursor: pointer;
 }
 
 .dark .rbc-toolbar button:hover,
@@ -34,12 +36,18 @@ body {
   background-color: #334155;
   color: #f1f5f9;
   border-color: #64748b;
+  box-shadow: 0 0 0 1px rgba(100, 116, 139, 0.3);
 }
 
 .dark .rbc-toolbar button.rbc-active {
   background-color: #1e3a5f;
   color: #fff;
-  border-color: #2d5a8e;
+  border-color: #3b82f6;
+  box-shadow: 0 0 8px rgba(59, 130, 246, 0.3);
+}
+
+.dark .rbc-toolbar button.rbc-active:hover {
+  background-color: #2d5a8e;
 }
 
 .dark .rbc-header {
@@ -132,6 +140,14 @@ body {
   padding: 6px 14px;
   font-size: 0.8rem;
   font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.rbc-toolbar button:active {
+  transform: scale(0.97);
 }
 
 .rbc-toolbar-label {
