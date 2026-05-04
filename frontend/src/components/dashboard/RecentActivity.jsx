@@ -6,7 +6,7 @@ export default function RecentActivity({ updates }) {
   return (
     <Card>
       <CardHeader>
-        <h3 className="text-sm font-semibold text-slate-800">Recent Activity</h3>
+        <h3 className="text-sm font-semibold text-slate-800 dark:text-slate-100">Recent Activity</h3>
       </CardHeader>
       <CardBody className="p-0">
         {(!updates || updates.length === 0) ? (

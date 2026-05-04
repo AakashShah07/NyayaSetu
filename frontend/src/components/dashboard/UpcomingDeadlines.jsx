@@ -16,7 +16,7 @@ export default function UpcomingDeadlines({ tasks }) {
   return (
     <Card>
       <CardHeader>
-        <h3 className="text-sm font-semibold text-slate-800">Upcoming Deadlines</h3>
+        <h3 className="text-sm font-semibold text-slate-800 dark:text-slate-100">Upcoming Deadlines</h3>
       </CardHeader>
       <CardBody className="p-0">
         {upcoming.length === 0 ? (
