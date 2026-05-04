@@ -39,6 +39,7 @@ app.use('/api/status-updates', require('./routes/statusUpdate.routes'));
 app.use('/api/users', require('./routes/user.routes'));
 app.use('/api/nlp', require('./routes/nlp.routes'));
 app.use('/api/notifications', require('./routes/notification.routes'));
+app.use('/api/analytics', require('./routes/analytics.routes'));
 
 // Error handler
 app.use(errorHandler);

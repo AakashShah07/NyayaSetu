@@ -9,6 +9,7 @@ import {
   Upload,
   Bell,
   Users,
+  BarChart3,
   Activity,
   LogOut,
   X,
@@ -21,6 +22,7 @@ const navItems = [
   { to: '/directives', icon: FileText, label: 'Directives' },
   { to: '/tasks', icon: CheckSquare, label: 'Tasks' },
   { to: '/judgments/upload', icon: Upload, label: 'Upload Judgment' },
+  { to: '/analytics', icon: BarChart3, label: 'Analytics' },
   { to: '/notifications', icon: Bell, label: 'Notifications' },
 ];
 
