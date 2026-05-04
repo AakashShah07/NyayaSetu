@@ -70,7 +70,7 @@ export default function NotificationsPage() {
   return (
     <>
       <Topbar title="Notifications" />
-      <div className="space-y-4">
+      <div className="mt-6 space-y-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex gap-3">
             <Select
@@ -115,22 +115,22 @@ export default function NotificationsPage() {
             <EmptyState icon={Bell} message="No notifications" />
           ) : (
             <>
-              <div className="divide-y divide-slate-100">
+              <div className="divide-y divide-slate-100 dark:divide-slate-700">
                 {data.items.map((n) => (
                   <div
                     key={n._id}
                     onClick={() => handleClick(n)}
                     className={clsx(
-                      'flex cursor-pointer items-center gap-4 px-6 py-4 hover:bg-slate-50',
-                      !n.read && 'bg-blue-50/50'
+                      'flex cursor-pointer items-center gap-4 px-6 py-4 hover:bg-slate-50 dark:hover:bg-slate-700/50',
+                      !n.read && 'bg-blue-50/50 dark:bg-blue-900/20'
                     )}
                   >
                     <div className={clsx('shrink-0', n.type === 'escalation' ? 'text-red-500' : 'text-slate-400')}>
                       {n.type === 'escalation' ? <AlertTriangle size={18} /> : <Clock size={18} />}
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className={clsx('text-sm', !n.read ? 'font-medium text-slate-800' : 'text-slate-600')}>{n.title}</p>
-                      {n.message && <p className="mt-0.5 text-xs text-slate-500">{n.message}</p>}
+                      <p className={clsx('text-sm', !n.read ? 'font-medium text-slate-800 dark:text-slate-100' : 'text-slate-600 dark:text-slate-300')}>{n.title}</p>
+                      {n.message && <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">{n.message}</p>}
                     </div>
                     <Badge color={PRIORITY_COLORS[n.priority] || 'slate'}>{n.priority}</Badge>
                     <span className="shrink-0 text-xs text-slate-400">{formatRelative(n.createdAt)}</span>
