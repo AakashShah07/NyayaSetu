@@ -1,3 +1,4 @@
+import { useState, useCallback } from 'react';
 import { Calendar, dateFnsLocalizer } from 'react-big-calendar';
 import { format, parse, startOfWeek, getDay } from 'date-fns';
 import { enUS } from 'date-fns/locale/en-US';
@@ -17,6 +18,17 @@ const messages = {
 };
 
 export default function DeadlineCalendar({ events, onSelectEvent }) {
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const [currentView, setCurrentView] = useState('month');
+
+  const handleNavigate = useCallback((newDate) => {
+    setCurrentDate(newDate);
+  }, []);
+
+  const handleViewChange = useCallback((newView) => {
+    setCurrentView(newView);
+  }, []);
+
   const eventStyleGetter = (event) => ({
     style: {
       backgroundColor: event.color || '#3b82f6',
@@ -29,16 +41,19 @@ export default function DeadlineCalendar({ events, onSelectEvent }) {
   });
 
   return (
-    <div className="h-[620px] rounded-lg [&_.rbc-toolbar]:pointer-events-auto [&_.rbc-toolbar_button]:pointer-events-auto">
+    <div className="h-[620px] rounded-lg">
       <Calendar
         localizer={localizer}
         events={events}
+        date={currentDate}
+        view={currentView}
+        onNavigate={handleNavigate}
+        onView={handleViewChange}
         startAccessor="start"
         endAccessor="end"
         eventPropGetter={eventStyleGetter}
         onSelectEvent={onSelectEvent}
         views={['month', 'week', 'agenda']}
-        defaultView="month"
         popup
         messages={messages}
         tooltipAccessor={(event) => event.title}
