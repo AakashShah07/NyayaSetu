@@ -1,0 +1,169 @@
+{
+  "pdf": "sample_karnataka_hc_judgment.pdf",
+  "text_length": 6818,
+  "extraction_method": "digital",
+  "pages": 3,
+  "entities": {
+    "court_name": {
+      "value": "High Court of Karnataka",
+      "confidence": 0.95
+    },
+    "case_number": {
+      "value": "W.P. No. 12345/2024",
+      "confidence": 0.95
+    },
+    "judgment_date": {
+      "value": "2024-01-10",
+      "confidence": 0.9
+    },
+    "filing_date": {
+      "value": "2024-01-10",
+      "confidence": 0.85
+    },
+    "judges": [
+      {
+        "value": "Justice A.B. SHARMA",
+        "confidence": 0.9
+      },
+      {
+        "value": "Justice C.D. PATEL",
+        "confidence": 0.9
+      },
+      {
+        "value": "Justice A.B. SHARMA JUSTICE C.D. PATEL",
+        "confidence": 0.9
+      }
+    ],
+    "parties": {
+      "petitioner": {
+        "value": "Department of Environment",
+        "confidence": 0.85
+      },
+      "respondent": {
+        "value": "through its Managing Director",
+        "confidence": 0.85
+      }
+    },
+    "monetary_amounts": [
+      {
+        "value": "Rs. 2.5\nCrore",
+        "confidence": 0.9
+      },
+      {
+        "value": "Rs. 5,00,000",
+        "confidence": 0.9
+      }
+    ]
+  },
+  "directives_count": 8,
+  "directives": [
+    {
+      "directive_text": "While we are mindful of the economic interests and employment concerns raised by the respondent, the right to a\nhealthy environment must take precedence, in accordance with the polluter pays principle established by the Hon'ble\nSupreme Court.\nPage 2/3\n\nIN THE HIGH COURT OF KARNATAKA AT BENGALURU\nORDER\nFor the reasons aforesaid, and in exercise of the powers conferred under Article 226 of the Constitution of India, this\nCourt hereby passes the following order and directions:",
+      "main_action": null,
+      "conditions": [],
+      "deadline": null,
+      "deadline_text": null,
+      "responsible_department": "General",
+      "responsible_entity": "respondent",
+      "source_page": 2,
+      "source_text": "While we are mindful of the economic interests and employment concerns raised by the respondent, the right to a\nhealthy environment must take precedence, in accordance with the polluter pays principle established by the Hon'ble\nSupreme Court.\nPage 2/3\n\nIN THE HIGH COURT OF KARNATAKA AT BENGALURU\nORDER\nFor the reasons aforesaid, and in exercise of the powers conferred under Article 226 of the Constitution of India, this\nCourt hereby passes the following order and directions:",
+      "confidence": 0.8,
+      "review_status": "auto_accepted"
+    },
+    {
+      "directive_text": "The Department of Environment, Government of Karnataka, shall submit a detailed environmental remediation\nplan for the restoration of water quality in the Arkavathi River and surrounding groundwater sources within 60\ndays from the date of this order. The plan shall include specific timelines, cost estimates, and monitoring\nmechanisms.",
+      "main_action": null,
+      "conditions": [],
+      "deadline": "2026-07-03",
+      "deadline_text": "within 60\ndays",
+      "responsible_department": "Environment",
+      "responsible_entity": "Department of Environment",
+      "source_page": 3,
+      "source_text": "The Department of Environment, Government of Karnataka, shall submit a detailed environmental remediation\nplan for the restoration of water quality in the Arkavathi River and surrounding groundwater sources within 60\ndays from the date of this order. The plan shall include specific timelines, cost estimates, and monitoring\nmechanisms.",
+      "confidence": 1.0,
+      "review_status": "auto_accepted"
+    },
+    {
+      "directive_text": "The respondent, M/s Industrial Polluters Pvt. Ltd., is directed to immediately cease all discharge of untreated or\npartially treated industrial effluents into the Arkavathi River or any water body forthwith. Any violation of this\ndirection shall attract contempt proceedings.",
+      "main_action": "attract contempt proceedings",
+      "conditions": [],
+      "deadline": "2026-05-11",
+      "deadline_text": "immediately",
+      "responsible_department": "General",
+      "responsible_entity": "respondent",
+      "source_page": 3,
+      "source_text": "The respondent, M/s Industrial Polluters Pvt. Ltd., is directed to immediately cease all discharge of untreated or\npartially treated industrial effluents into the Arkavathi River or any water body forthwith. Any violation of this\ndirection shall attract contempt proceedings.",
+      "confidence": 1.0,
+      "review_status": "auto_accepted"
+    },
+    {
+      "directive_text": "The respondent shall deposit a sum of Rs. 5,00,000 (Rupees Five Lakhs Only) as interim environmental\ncompensation with the Karnataka State Pollution Control Board within 30 days from the date of this order. This\namount shall be utilized exclusively for providing clean drinking water to the affected communities in Hesaraghatta\nand surrounding villages.",
+      "main_action": "deposit a sum of Rs",
+      "conditions": [],
+      "deadline": "2026-06-03",
+      "deadline_text": "within 30 days",
+      "responsible_department": "General",
+      "responsible_entity": "respondent",
+      "source_page": 3,
+      "source_text": "The respondent shall deposit a sum of Rs. 5,00,000 (Rupees Five Lakhs Only) as interim environmental\ncompensation with the Karnataka State Pollution Control Board within 30 days from the date of this order. This\namount shall be utilized exclusively for providing clean drinking water to the affected communities in Hesaraghatta\nand surrounding villages.",
+      "confidence": 1.0,
+      "review_status": "auto_accepted"
+    },
+    {
+      "directive_text": "The Commissioner of the Department of Social Welfare shall ensure that the affected communities are provided\nwith alternative clean drinking water supply through tanker services or temporary pipeline connections, provided\nthat the assessment report from the District Health Officer confirms groundwater contamination, within 90 days\nfrom the date of this order.",
+      "main_action": null,
+      "conditions": [
+        "the assessment report from the District Health Officer confirms groundwater contamination"
+      ],
+      "deadline": "2026-08-02",
+      "deadline_text": "within 90 days",
+      "responsible_department": "Social Welfare",
+      "responsible_entity": "Commissioner of the Department of Social Welfare",
+      "source_page": 3,
+      "source_text": "The Commissioner of the Department of Social Welfare shall ensure that the affected communities are provided\nwith alternative clean drinking water supply through tanker services or temporary pipeline connections, provided\nthat the assessment report from the District Health Officer confirms groundwater contamination, within 90 days\nfrom the date of this order.",
+      "confidence": 1.0,
+      "review_status": "auto_accepted"
+    },
+    {
+      "directive_text": "The Superintendent of Police, Bengaluru Rural District, is directed to ensure strict compliance of this order and\nshall file a compliance report before this Court on or before 15th June, 2024. Any obstruction in the execution of\nthis order shall be dealt with under the relevant provisions of the Indian Penal Code.",
+      "main_action": "file a compliance report before this Court on or before 15th June, 2024",
+      "conditions": [],
+      "deadline": "2024-06-15",
+      "deadline_text": "on or before 15th June, 2024",
+      "responsible_department": "General",
+      "responsible_entity": null,
+      "source_page": 3,
+      "source_text": "The Superintendent of Police, Bengaluru Rural District, is directed to ensure strict compliance of this order and\nshall file a compliance report before this Court on or before 15th June, 2024. Any obstruction in the execution of\nthis order shall be dealt with under the relevant provisions of the Indian Penal Code.",
+      "confidence": 0.8,
+      "review_status": "auto_accepted"
+    },
+    {
+      "directive_text": "The Karnataka State Pollution Control Board shall conduct monthly inspections of the respondent's unit and\nsubmit quarterly compliance reports to this Court, subject to the condition that the first report shall be submitted\nwithin 45 days.",
+      "main_action": null,
+      "conditions": [
+        "the condition that the first report shall be submitted\nwithin 45 days"
+      ],
+      "deadline": "2026-06-18",
+      "deadline_text": "within 45 days",
+      "responsible_department": "General",
+      "responsible_entity": null,
+      "source_page": 3,
+      "source_text": "The Karnataka State Pollution Control Board shall conduct monthly inspections of the respondent's unit and\nsubmit quarterly compliance reports to this Court, subject to the condition that the first report shall be submitted\nwithin 45 days.",
+      "confidence": 0.8,
+      "review_status": "auto_accepted"
+    },
+    {
+      "directive_text": "The respondent shall complete the installation and commissioning of the new Effluent Treatment Plant within 6\nmonths from the date of this order. The respondent shall not resume full-scale production operations until the new\nETP is certified as operational by the KSPCB.\nThe petition stands disposed of in the above terms. No costs. The Registry shall send a copy of this order to all the\nrespondents and concerned authorities forthwith.\nSd/- Sd/-\nJUSTICE A.B. SHARMA JUSTICE C.D. PATEL\nPronounced in open court on this 15th day of March, 2024.\nPage 3/3",
+      "main_action": null,
+      "conditions": [],
+      "deadline": "2026-11-04",
+      "deadline_text": "within 6\nmonths",
+      "responsible_department": "General",
+      "responsible_entity": "respondent",
+      "source_page": 3,
+      "source_text": "The respondent shall complete the installation and commissioning of the new Effluent Treatment Plant within 6\nmonths from the date of this order. The respondent shall not resume full-scale production operations until the new\nETP is certified as operational by the KSPCB.\nThe petition stands disposed of in the above terms. No costs. The Registry shall send a copy of this order to all the\nrespondents and concerned authorities forthwith.\nSd/- Sd/-\nJUSTICE A.B. SHARMA JUSTICE C.D. PATEL\nPronounced in",
+      "confidence": 1.0,
+      "review_status": "auto_accepted"
+    }
+  ]
+}
