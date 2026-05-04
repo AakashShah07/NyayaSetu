@@ -50,8 +50,8 @@ export default function AuditLogPage() {
 
         {pagination.pages > 1 && (
           <Pagination
-            currentPage={pagination.page}
-            totalPages={pagination.pages}
+            page={pagination.page}
+            pages={pagination.pages}
             onPageChange={(p) => setPagination((prev) => ({ ...prev, page: p }))}
           />
         )}

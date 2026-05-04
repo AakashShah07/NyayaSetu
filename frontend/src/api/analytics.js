@@ -1,5 +1,5 @@
 import client from './client';
 
-export const getOverview = () => client.get('/analytics/overview');
-export const getComplianceRate = (months = 6) => client.get(`/analytics/compliance?months=${months}`);
-export const getDepartmentPerformance = () => client.get('/analytics/departments');
+export const getOverview = () => client.get('/api/analytics/overview');
+export const getComplianceRate = (months = 6) => client.get(`/api/analytics/compliance?months=${months}`);
+export const getDepartmentPerformance = () => client.get('/api/analytics/departments');

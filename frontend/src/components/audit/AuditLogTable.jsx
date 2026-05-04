@@ -4,7 +4,7 @@ const ACTION_COLORS = {
   create: 'green',
   update: 'blue',
   delete: 'red',
-  reassign: 'yellow',
+  reassign: 'amber',
   status_change: 'purple',
 };
 
@@ -33,7 +33,7 @@ export default function AuditLogTable({ logs }) {
               </td>
               <td className="px-3 py-2">{log.userName || log.user?.name || 'System'}</td>
               <td className="px-3 py-2">
-                <Badge variant={ACTION_COLORS[log.action] || 'gray'}>{log.action}</Badge>
+                <Badge color={ACTION_COLORS[log.action] || 'slate'}>{log.action}</Badge>
               </td>
               <td className="px-3 py-2 capitalize">{log.entity}</td>
               <td className="px-3 py-2 text-xs text-gray-600 dark:text-gray-400">

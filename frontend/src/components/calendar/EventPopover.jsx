@@ -11,7 +11,7 @@ export default function EventPopover({ event, onClose }) {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="mb-3 flex items-center justify-between">
-          <Badge variant={resource.type === 'task' ? 'blue' : 'purple'}>
+          <Badge color={resource.type === 'task' ? 'blue' : 'purple'}>
             {resource.type === 'task' ? 'Task' : 'Directive'}
           </Badge>
           <button onClick={onClose} className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
