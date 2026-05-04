@@ -3,13 +3,16 @@ const ctrl = require('../controllers/directive.controller');
 const { createValidator, updateValidator } = require('../validators/directive.validator');
 const validate = require('../middleware/validate');
 const { protect, authorize } = require('../middleware/auth');
+const { createAuditMiddleware } = require('../middleware/auditLogger');
+
+const audit = createAuditMiddleware('directive');
 
 router.use(protect);
 
 router.get('/', ctrl.getAll);
 router.get('/:id', ctrl.getOne);
-router.post('/', createValidator, validate, ctrl.create);
-router.put('/:id', updateValidator, validate, ctrl.update);
-router.delete('/:id', authorize('admin'), ctrl.remove);
+router.post('/', createValidator, validate, audit('create'), ctrl.create);
+router.put('/:id', updateValidator, validate, audit('update'), ctrl.update);
+router.delete('/:id', authorize('admin'), audit('delete'), ctrl.remove);
 
 module.exports = router;

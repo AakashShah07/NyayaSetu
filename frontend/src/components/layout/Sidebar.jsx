@@ -12,6 +12,7 @@ import {
   BarChart3,
   ClipboardList,
   CalendarDays,
+  ScrollText,
   Activity,
   LogOut,
   X,
@@ -33,6 +34,7 @@ const navItems = [
 const adminItems = [
   { to: '/users', icon: Users, label: 'User Management' },
   { to: '/admin/health', icon: Activity, label: 'System Health' },
+  { to: '/admin/audit-log', icon: ScrollText, label: 'Audit Log' },
 ];
 
 export default function Sidebar() {

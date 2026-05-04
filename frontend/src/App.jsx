@@ -16,6 +16,7 @@ import NotificationsPage from './pages/NotificationsPage';
 import AnalyticsPage from './pages/AnalyticsPage';
 import ReportsPage from './pages/ReportsPage';
 import CalendarPage from './pages/CalendarPage';
+import AuditLogPage from './pages/AuditLogPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 export default function App() {
@@ -39,6 +40,7 @@ export default function App() {
           <Route element={<RoleGate roles={['admin']} />}>
             <Route path="/users" element={<UserManagementPage />} />
             <Route path="/admin/health" element={<SystemHealthPage />} />
+            <Route path="/admin/audit-log" element={<AuditLogPage />} />
           </Route>
         </Route>
       </Route>

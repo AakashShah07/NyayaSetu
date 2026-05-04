@@ -41,6 +41,7 @@ app.use('/api/nlp', require('./routes/nlp.routes'));
 app.use('/api/notifications', require('./routes/notification.routes'));
 app.use('/api/analytics', require('./routes/analytics.routes'));
 app.use('/api/reports', require('./routes/report.routes'));
+app.use('/api/audit-logs', require('./routes/auditLog.routes'));
 
 // Error handler
 app.use(errorHandler);
