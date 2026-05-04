@@ -19,7 +19,7 @@ export default function DeadlineCalendar({ events, onSelectEvent }) {
   });
 
   return (
-    <div className="h-[600px]">
+    <div className="h-[620px] rounded-lg">
       <Calendar
         localizer={localizer}
         events={events}
@@ -30,6 +30,7 @@ export default function DeadlineCalendar({ events, onSelectEvent }) {
         views={['month', 'week', 'agenda']}
         defaultView="month"
         popup
+        tooltipAccessor={(event) => event.title}
       />
     </div>
   );
