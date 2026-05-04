@@ -57,7 +57,7 @@ export default function JudgmentUploadPage() {
   return (
     <>
       <Topbar title="Upload Judgment" />
-      <div className="mx-auto max-w-2xl space-y-6">
+      <div className="mx-auto mt-6 max-w-2xl space-y-6">
         {/* Steps indicator */}
         <div className="flex items-center gap-2 text-sm">
           {['Upload PDF', 'Extract Directives', 'Review'].map((label, i) => (
@@ -80,7 +80,7 @@ export default function JudgmentUploadPage() {
 
         {step === 1 && (
           <Card>
-            <CardHeader><h3 className="text-sm font-semibold text-slate-800">Upload Court Judgment PDF</h3></CardHeader>
+            <CardHeader><h3 className="text-sm font-semibold text-slate-800 dark:text-slate-100">Upload Court Judgment PDF</h3></CardHeader>
             <CardBody>
               <JudgmentUploadForm onUploaded={handleUploaded} onBulkUploaded={handleBulkUploaded} />
             </CardBody>
@@ -89,7 +89,7 @@ export default function JudgmentUploadPage() {
 
         {step === 2 && mode === 'single' && judgment && (
           <Card>
-            <CardHeader><h3 className="text-sm font-semibold text-slate-800">Extract Directives</h3></CardHeader>
+            <CardHeader><h3 className="text-sm font-semibold text-slate-800 dark:text-slate-100">Extract Directives</h3></CardHeader>
             <CardBody>
               <p className="mb-4 text-sm text-slate-600">
                 Judgment <strong>{judgment.caseId}</strong> uploaded. Run NLP extraction to identify directives and deadlines.
@@ -101,7 +101,7 @@ export default function JudgmentUploadPage() {
 
         {step === 2 && mode === 'bulk' && (
           <Card>
-            <CardHeader><h3 className="text-sm font-semibold text-slate-800">Bulk Extraction Progress</h3></CardHeader>
+            <CardHeader><h3 className="text-sm font-semibold text-slate-800 dark:text-slate-100">Bulk Extraction Progress</h3></CardHeader>
             <CardBody>
               <p className="mb-4 text-sm text-slate-600">
                 {bulkJudgments.length} judgments uploaded and queued for extraction.
@@ -113,7 +113,7 @@ export default function JudgmentUploadPage() {
 
         {step === 3 && mode === 'single' && (
           <Card>
-            <CardHeader><h3 className="text-sm font-semibold text-slate-800">Review Extracted Directives</h3></CardHeader>
+            <CardHeader><h3 className="text-sm font-semibold text-slate-800 dark:text-slate-100">Review Extracted Directives</h3></CardHeader>
             <CardBody>
               <DirectiveReviewList directives={directives} onUpdated={fetchDirectives} />
               <div className="mt-6 flex justify-end">
