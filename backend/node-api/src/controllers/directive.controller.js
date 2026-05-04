@@ -12,6 +12,11 @@ const getAll = async (req, res, next) => {
     if (req.query.judgment) filter.judgment = req.query.judgment;
     if (req.query.department) filter.responsibleDepartment = req.query.department;
     if (req.query.reviewStatus) filter.reviewStatus = req.query.reviewStatus;
+    if (req.query.startDate || req.query.endDate) {
+      filter.deadline = {};
+      if (req.query.startDate) filter.deadline.$gte = new Date(req.query.startDate);
+      if (req.query.endDate) filter.deadline.$lte = new Date(req.query.endDate);
+    }
 
     const [directives, total] = await Promise.all([
       Directive.find(filter).sort(sort).skip(skip).limit(limit).populate('judgment', 'caseId courtName'),

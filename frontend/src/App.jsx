@@ -15,6 +15,7 @@ import SystemHealthPage from './pages/SystemHealthPage';
 import NotificationsPage from './pages/NotificationsPage';
 import AnalyticsPage from './pages/AnalyticsPage';
 import ReportsPage from './pages/ReportsPage';
+import CalendarPage from './pages/CalendarPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 export default function App() {
@@ -33,6 +34,7 @@ export default function App() {
           <Route path="/directives" element={<DirectivesListPage />} />
           <Route path="/analytics" element={<AnalyticsPage />} />
           <Route path="/reports" element={<ReportsPage />} />
+          <Route path="/calendar" element={<CalendarPage />} />
           <Route path="/notifications" element={<NotificationsPage />} />
           <Route element={<RoleGate roles={['admin']} />}>
             <Route path="/users" element={<UserManagementPage />} />

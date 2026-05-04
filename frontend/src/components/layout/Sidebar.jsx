@@ -11,6 +11,7 @@ import {
   Users,
   BarChart3,
   ClipboardList,
+  CalendarDays,
   Activity,
   LogOut,
   X,
@@ -25,6 +26,7 @@ const navItems = [
   { to: '/judgments/upload', icon: Upload, label: 'Upload Judgment' },
   { to: '/analytics', icon: BarChart3, label: 'Analytics' },
   { to: '/reports', icon: ClipboardList, label: 'Reports' },
+  { to: '/calendar', icon: CalendarDays, label: 'Calendar' },
   { to: '/notifications', icon: Bell, label: 'Notifications' },
 ];
 
