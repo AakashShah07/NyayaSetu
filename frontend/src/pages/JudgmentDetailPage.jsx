@@ -5,6 +5,7 @@ import Card, { CardHeader, CardBody } from '../components/ui/Card';
 import Badge from '../components/ui/Badge';
 import Spinner from '../components/ui/Spinner';
 import DirectiveReviewList from '../components/judgments/DirectiveReviewList';
+import CommentSection from '../components/comments/CommentSection';
 import ExtractionProgress from '../components/judgments/ExtractionProgress';
 import { getJudgment } from '../api/judgments';
 import { getDirectives } from '../api/directives';
@@ -129,6 +130,13 @@ export default function JudgmentDetailPage() {
             <DirectiveReviewList directives={directives} onUpdated={fetchData} />
           </div>
         </div>
+
+        {/* Comments */}
+        <Card>
+          <CardBody>
+            <CommentSection entityType="judgment" entityId={id} />
+          </CardBody>
+        </Card>
       </div>
     </>
   );

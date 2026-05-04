@@ -9,6 +9,7 @@ import Spinner from '../components/ui/Spinner';
 import TaskStatusTimeline from '../components/tasks/TaskStatusTimeline';
 import TaskStatusUpdateForm from '../components/tasks/TaskStatusUpdateForm';
 import ReassignModal from '../components/admin/ReassignModal';
+import CommentSection from '../components/comments/CommentSection';
 import { useAuth } from '../context/AuthContext';
 import { getTask } from '../api/tasks';
 import { getStatusUpdates } from '../api/statusUpdates';
@@ -172,6 +173,13 @@ export default function TaskDetailPage() {
           </Card>
         </div>
       </div>
+
+      {/* Comments */}
+      <Card className="mt-6">
+        <CardBody>
+          <CommentSection entityType="task" entityId={id} />
+        </CardBody>
+      </Card>
 
       {task && (
         <ReassignModal
