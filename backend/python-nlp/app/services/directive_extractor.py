@@ -1,6 +1,6 @@
 import re
 from typing import Optional
-from app.services.nlp_service import nlp
+from app.services.nlp_service import nlp, ensure_model
 from app.services.legal_ner import map_to_department
 from app.services.deadline_resolver import resolve_deadline
 
@@ -80,6 +80,8 @@ def extract_directives(
     Returns:
         List of directive dicts with all extracted fields.
     """
+    ensure_model()
+
     if not order_section_text.strip():
         return []
 

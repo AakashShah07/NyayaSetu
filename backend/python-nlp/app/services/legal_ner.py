@@ -1,6 +1,6 @@
 import re
 from typing import Optional
-from app.services.nlp_service import nlp
+from app.services.nlp_service import nlp, ensure_model
 
 
 # --- Indian court name patterns ---
@@ -126,6 +126,7 @@ def extract_legal_metadata(text: str, first_pages_text: Optional[str] = None) ->
     """Extract structured legal metadata from court judgment text.
     first_pages_text: text from the first 2-3 pages (for party/header extraction).
     """
+    ensure_model()
     header_text = first_pages_text or text[:5000]
 
     return {

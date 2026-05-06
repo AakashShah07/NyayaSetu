@@ -26,11 +26,7 @@ app.include_router(health.router)
 
 @app.on_event("startup")
 async def startup():
-    print("Loading spaCy model...")
-    if load_model():
-        print("spaCy model loaded successfully")
-    else:
-        print("WARNING: Failed to load spaCy model. Run: python -m spacy download en_core_web_sm")
+    print("NyayaSetu NLP Service started. spaCy model will load on first request.")
 
 
 @app.post("/extract/text")

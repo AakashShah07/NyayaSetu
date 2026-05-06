@@ -17,8 +17,16 @@ def is_model_loaded():
     return nlp is not None
 
 
+def ensure_model():
+    """Lazy-load the spaCy model on first use."""
+    global nlp
+    if nlp is None:
+        load_model()
+
+
 def extract_entities(text: str) -> dict:
     """Extract named entities from text using spaCy."""
+    ensure_model()
     if not nlp:
         return {"entities": [], "total": 0}
 
