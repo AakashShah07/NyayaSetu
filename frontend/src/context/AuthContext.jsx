@@ -31,6 +31,14 @@ export function AuthProvider({ children }) {
     return res.data.user;
   }, []);
 
+  const register = useCallback(async (data) => {
+    const res = await authApi.register(data);
+    localStorage.setItem('accessToken', res.data.accessToken);
+    localStorage.setItem('refreshToken', res.data.refreshToken);
+    setUser(res.data.user);
+    return res.data.user;
+  }, []);
+
   const logout = useCallback(() => {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
@@ -44,7 +52,7 @@ export function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider
-      value={{ user, isLoading, isAuthenticated: !!user, login, logout, hasRole }}
+      value={{ user, isLoading, isAuthenticated: !!user, login, register, logout, hasRole }}
     >
       {children}
     </AuthContext.Provider>
