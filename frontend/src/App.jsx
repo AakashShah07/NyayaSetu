@@ -5,8 +5,10 @@ import RoleGate from './components/layout/RoleGate';
 import AppLayout from './components/layout/AppLayout';
 import Spinner from './components/ui/Spinner';
 
-// Eagerly loaded (login is first screen)
+// Eagerly loaded (public pages)
+import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
+import SignUpPage from './pages/SignUpPage';
 
 // Lazy-loaded pages (code-split per route)
 const DashboardPage = lazy(() => import('./pages/DashboardPage'));
@@ -33,10 +35,11 @@ export default function App() {
   return (
     <Suspense fallback={<PageLoader />}>
       <Routes>
+        <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
         <Route element={<ProtectedRoute />}>
           <Route element={<AppLayout />}>
-            <Route path="/" element={<Navigate to="/dashboard" replace />} />
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/judgments" element={<JudgmentsListPage />} />
             <Route path="/judgments/upload" element={<JudgmentUploadPage />} />
