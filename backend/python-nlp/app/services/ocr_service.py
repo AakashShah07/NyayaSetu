@@ -1,20 +1,33 @@
-import pytesseract
-from PyPDF2 import PdfReader
-from PIL import Image
-from pdf2image import convert_from_bytes
 import io
 import logging
+
+from PyPDF2 import PdfReader
+from PIL import Image
 
 from app.config import TESSERACT_CMD
 from app.services.image_preprocessor import preprocess_for_ocr
 
-pytesseract.pytesseract.tesseract_cmd = TESSERACT_CMD
+try:
+    import pytesseract
+    pytesseract.pytesseract.tesseract_cmd = TESSERACT_CMD
+    TESSERACT_AVAILABLE = True
+except ImportError:
+    TESSERACT_AVAILABLE = False
+
+try:
+    from pdf2image import convert_from_bytes
+    PDF2IMAGE_AVAILABLE = True
+except ImportError:
+    PDF2IMAGE_AVAILABLE = False
+
 logger = logging.getLogger(__name__)
 
 MIN_DIGITAL_TEXT_PER_PAGE = 20
 
 
 def is_tesseract_available():
+    if not TESSERACT_AVAILABLE:
+        return False, None
     try:
         version = pytesseract.get_tesseract_version()
         return True, str(version)
@@ -66,8 +79,8 @@ def extract_text_from_pdf(file_bytes: bytes) -> dict:
     digital_text = "\n".join(p["text"] for p in pages_data).strip()
     needs_ocr = len(digital_text) < 100
 
-    # Phase 2: OCR for pages that need it
-    if needs_ocr:
+    # Phase 2: OCR for pages that need it (only if dependencies available)
+    if needs_ocr and TESSERACT_AVAILABLE and PDF2IMAGE_AVAILABLE:
         try:
             images = convert_from_bytes(file_bytes, dpi=300)
             for i, img in enumerate(images):
@@ -82,6 +95,8 @@ def extract_text_from_pdf(file_bytes: bytes) -> dict:
                         logger.warning(f"OCR failed for page {i + 1}: {e}")
         except Exception as e:
             logger.warning(f"pdf2image conversion failed: {e}")
+    elif needs_ocr:
+        logger.info("OCR skipped: tesseract or pdf2image not available")
 
     # Determine overall method
     methods = set(p["method"] for p in pages_data if p["text"].strip())

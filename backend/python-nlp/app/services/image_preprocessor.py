@@ -1,12 +1,21 @@
-import cv2
-import numpy as np
+try:
+    import cv2
+    import numpy as np
+    CV2_AVAILABLE = True
+except ImportError:
+    CV2_AVAILABLE = False
+
 from PIL import Image
 
 
 def preprocess_for_ocr(pil_image: Image.Image) -> Image.Image:
     """Preprocess a PIL image for better OCR accuracy.
     Steps: grayscale -> denoise -> threshold -> deskew.
+    Falls back to simple grayscale if OpenCV is not available.
     """
+    if not CV2_AVAILABLE:
+        return pil_image.convert("L")
+
     img = np.array(pil_image)
 
     # Convert to grayscale if needed
@@ -27,7 +36,7 @@ def preprocess_for_ocr(pil_image: Image.Image) -> Image.Image:
     return Image.fromarray(binary)
 
 
-def _deskew(image: np.ndarray) -> np.ndarray:
+def _deskew(image) -> "np.ndarray":
     """Detect and correct skew angle using minAreaRect on contours."""
     coords = np.column_stack(np.where(image < 128))
     if len(coords) < 50:
