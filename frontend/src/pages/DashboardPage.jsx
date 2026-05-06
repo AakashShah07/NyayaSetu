@@ -44,7 +44,9 @@ export default function DashboardPage() {
     return (
       <>
         <Topbar title="Dashboard" />
-        <div className="flex justify-center py-20"><Spinner size="lg" /></div>
+        <div className="flex flex-col items-center justify-center py-32">
+          <Spinner size="lg" label="Loading dashboard..." />
+        </div>
       </>
     );
   }

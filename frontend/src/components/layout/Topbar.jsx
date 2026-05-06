@@ -19,7 +19,7 @@ export default function Topbar({ title }) {
         <button onClick={toggle} className="text-slate-500 hover:text-slate-700 lg:hidden dark:text-slate-400 dark:hover:text-slate-200">
           <Menu size={24} />
         </button>
-        <h1 className="text-xl font-bold tracking-tight text-slate-800 dark:text-white">{title}</h1>
+        <h1 className="text-xl font-bold tracking-tight text-slate-800 dark:text-white" style={{ fontFamily: "var(--font-heading)" }}>{title}</h1>
       </div>
       <div className="flex items-center gap-2">
         <button
