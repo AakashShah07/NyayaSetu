@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { useNavigate, Navigate } from 'react-router-dom';
+import { useNavigate, Navigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Scale } from 'lucide-react';
+import { Scale, ArrowLeft } from 'lucide-react';
 
 export default function LoginPage() {
   const { login, isAuthenticated } = useAuth();
@@ -30,6 +30,15 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-slate-100 px-4 dark:bg-bg-dark">
       <div className="w-full max-w-md">
+        <div className="mb-6">
+          <Link
+            to="/"
+            className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-navy dark:text-slate-400 dark:hover:text-blue-400 transition-colors"
+          >
+            <ArrowLeft size={16} />
+            Back to Home
+          </Link>
+        </div>
         <div className="mb-8 text-center">
           <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-navy text-white">
             <Scale size={32} />
@@ -86,6 +95,13 @@ export default function LoginPage() {
           >
             {loading ? 'Signing in...' : 'Sign In'}
           </button>
+
+          <p className="mt-6 text-center text-sm text-slate-500 dark:text-slate-400">
+            Don't have an account?{' '}
+            <Link to="/signup" className="font-medium text-navy hover:text-navy-light dark:text-blue-400 dark:hover:text-blue-300">
+              Sign Up
+            </Link>
+          </p>
         </form>
       </div>
     </div>
