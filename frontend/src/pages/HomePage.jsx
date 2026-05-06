@@ -106,10 +106,10 @@ const features = [
 ];
 
 const stats = [
-  { value: 500, suffix: '+', label: 'Court Orders Tracked', icon: Gavel },
-  { value: 98, suffix: '%', label: 'Compliance Rate', icon: TrendingUp },
-  { value: 12, suffix: '', label: 'Departments Served', icon: Building2 },
-  { value: 2000, suffix: '+', label: 'Directives Processed', icon: Zap },
+  { value: 95, suffix: '%', label: 'Extraction Accuracy', icon: Brain },
+  { value: 90, suffix: '%', label: 'Deadline Detection', icon: Clock },
+  { value: 80, suffix: '%', label: 'Faster Compliance', icon: TrendingUp },
+  { value: 99, suffix: '%', label: 'Uptime Reliability', icon: Zap },
 ];
 
 const steps = [
