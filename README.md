@@ -13,6 +13,7 @@
 [![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://docker.com/)
 [![Tests](https://img.shields.io/badge/Tests-74_Passing-brightgreen?style=for-the-badge&logo=jest&logoColor=white)](#-running-tests)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Visit_Site-blue?style=for-the-badge&logo=vercel&logoColor=white)](https://nyaya-setu-liart.vercel.app/)
 
 <br />
 
@@ -299,6 +300,17 @@ PDF Upload → Text Extraction (PyPDF2/OCR) → NLP Processing (spaCy NER)
 | Python | 3.10+ | [python.org](https://python.org/) |
 | MongoDB | 7+ | [mongodb.com](https://mongodb.com/) or use Docker |
 | Tesseract OCR | Latest | `sudo apt install tesseract-ocr` |
+
+---
+
+### 🌐 Live Demo
+
+> **Try it now:** https://nyaya-setu-liart.vercel.app/
+>
+> | Role | Email | Password |
+> |:---|:---|:---|
+> | Admin | `admin@nyayasetu.gov.in` | `admin12345` |
+> | Officer | `sharma@environment.gov.in` | `officer12345` |
 
 ---
 
