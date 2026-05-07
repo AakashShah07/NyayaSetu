@@ -21,7 +21,7 @@ import clsx from 'clsx';
 
 const navItems = [
   { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
-  { to: '/judgments', icon: Scale, label: 'Court Orders' },
+  { to: '/judgments', icon: Scale, label: 'Court Orders', end: true },
   { to: '/directives', icon: FileText, label: 'Directives' },
   { to: '/tasks', icon: CheckSquare, label: 'Tasks' },
   { to: '/judgments/upload', icon: Upload, label: 'Upload Judgment' },
@@ -76,10 +76,11 @@ export default function Sidebar() {
         </div>
 
         <nav className="flex-1 space-y-1 px-3 py-4 overflow-y-auto">
-          {items.map(({ to, icon: Icon, label }) => (
+          {items.map(({ to, icon: Icon, label, end }) => (
             <NavLink
               key={to}
               to={to}
+              end={end}
               onClick={close}
               className={({ isActive }) =>
                 clsx(
